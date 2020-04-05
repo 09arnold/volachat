@@ -1,3 +1,6 @@
+## A very very **_WIP_** Project
+Proper documentation coming soon
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
