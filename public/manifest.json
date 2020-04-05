@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "VolaChat",
+  "name": "VolaChat - As in, you know, Volatile Chat",
   "icons": [
     {
       "src": "favicon.ico",

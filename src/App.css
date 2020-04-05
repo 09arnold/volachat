@@ -1,3 +1,6 @@
+body {
+  /* background-color: aquamarine; */
+}
 .App {
   text-align: center;
 }
@@ -15,7 +18,8 @@
 
 .App-header {
   background-color: #282c34;
-  min-height: 100vh;
+  height: calc(100vh - (132px+48px));
+  /* min-height: 100vh; */
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -35,4 +39,127 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+
+html,
+body {
+  margin: 0;
+  height: 100%;
+}
+
+#root {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.flex-section {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.flex-col-scroll {
+  flex-grow: 0;
+  overflow: auto;
+  min-height: 100%;
+}
+
+.flex-no-shrink {
+  flex-shrink: 0;
+}
+
+.root {
+  width: 100%;
+  display: flex;
+  height: 100%;
+}
+
+.side-bar {
+  color: #FFF;
+  width: 56px;
+}
+
+.chat-list {
+  flex-grow: 0;
+  overflow-y: auto;
+  min-height: 100%;
+  margin-left: 58px;
+  position: relative;
+}
+/* 
+.chat-list .chatlist {
+  flex-grow: 0;
+  overflow-y: auto;
+  min-height: 100%;
+  margin-left: 58px;
+  position: relative;
+} */
+
+.chat-list-empty {
+  display: flex;
+  /* height: calc(100vh - 49px); */
+  padding: 28px;
+  justify-content: center;
+}
+
+.search {
+  position: absolute;
+  top: 0;
+}
+
+.chat-window {
+  flex-grow: 1;
+  overflow: auto;
+  min-height: 100%;
+}
+
+.MuiList-padding {
+  padding: 0px !important;
+}
+
+/* ::-webkit-scrollbar {
+width: 10px; 
+background-color: transparent; 
+}
+
+::-webkit-scrollbar-thumb {
+  -moz-transition: all .2s ease-in;
+  -o-transition: all .2s ease-in;
+  -webkit-transition: all .2s ease-in;
+  transition: all .2s ease-in;
+  background: rgba(215, 215, 215, .65);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(215, 215, 215, 1);
+} */
+
+ /* Scrollbar with Hover Transition Effect */
+::-webkit-scrollbar {
+	width: 7px;
+}
+::-webkit-scrollbar-thumb {
+	background-clip: content-box;
+	/* border: 1px solid transparent; */
+	border-radius: 7px;
+	box-shadow: inset 0 0 0 10px;
+}
+::-webkit-scrollbar-button {
+	width: 0;
+	height: 0;
+	display: none;
+}
+::-webkit-scrollbar-corner {
+	background-color: transparent;
+}
+.scroller {
+	color: rgba(215, 215, 215, .75);
+	transition: color 0.3s;
+}
+.scroller:hover {
+  color: rgba(185, 185, 185, 1);
 }
