@@ -156,7 +156,7 @@ export default function MiniDrawer(props) {
           <div>
             {menuButton}
           </div>
-          <Divider />
+          <Divider variant="middle" />
           <List>
             {links.map((link) => (
               <ListItem button key={link.url} style={{ flexGrow: "0" }}>
@@ -167,16 +167,16 @@ export default function MiniDrawer(props) {
               </ListItem>
             ))}
           </List>
-          <Divider />
+          <Divider variant="middle" />
           <ListItem button style={{ flexGrow: "0" }} onClick={toggleThemeI}>
             <Tooltip title={themeLabel}>
               <ListItemIcon>{themeIcon}</ListItemIcon>
             </Tooltip>
             <ListItemText primary={themeLabel} />
           </ListItem>
-          <Divider />
+          <Divider variant="middle" />
           <div className="vertical-strecth" style={{ height: "100%" }}></div>
-          <Divider />
+          <Divider variant="middle" />
           <List>
             <ListItem button style={{ flexGrow: "0" }}>
               <Tooltip title={'Logout'}>

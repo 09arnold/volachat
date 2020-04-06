@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import InputBase from '@material-ui/core/InputBase';
@@ -11,6 +11,9 @@ import EmojiEmotionsIcon from '@material-ui/icons/EmojiEmotions';
 
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
+
+import { connect } from "react-redux";
+import { addMessage, selectIndex, selectChat, triggerRender } from "../../redux/actions";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -37,22 +40,25 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function MessageInput(props) {
+function MessageInput(props) {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [inputValue, setInputValue] = React.useState('');
-  const inputBaseRef = useRef();
 
   const handleKeyPress = event => {
-    console.log(this)
     if (event.which === 13) {
       if (!event.ctrlKey && !event.altKey && !event.shiftKey) {
         props.addMessage({
           text: event.target.value,
           time: new Date().toLocaleString(),
           source: 'local'
-        });
-        event.persist()
+        }, props.chatList, props.selectedUserIndex);
+
+        props.selectIndex(0);
+        props.triggerRender(props.renderCount);
+
+        event.persist();
+
         setTimeout(function () {
           event.target.style = null;
           event.target.value = null;
@@ -80,11 +86,7 @@ export default function MessageInput(props) {
   const handleClose = () => {
     setAnchorEl(null);
   };
-  
-  useEffect(function() {
-    console.log(inputBaseRef.current.value)
-  });
-  
+
   return (
     <>
       <Paper component="form" className={classes.root}>
@@ -98,7 +100,6 @@ export default function MessageInput(props) {
           onChange={handleChange}
           onKeyPress={handleKeyPress}
           className={classes.input}
-          inputRef={inputBaseRef}
           placeholder="Say something...."
           inputProps={{ 'aria-label': 'say something....' }}
         />
@@ -129,3 +130,14 @@ export default function MessageInput(props) {
     </>
   );
 }
+
+const mapStateToProps = state => {
+  return {
+    chatList: state.chatList,
+    selectedUserIndex: state.selectedUserIndex,
+    selectedChat: state.selectedChat,
+    renderCount: state.renderCount
+  };
+}
+
+export default connect(mapStateToProps, { addMessage, selectIndex, selectChat, triggerRender })(MessageInput);

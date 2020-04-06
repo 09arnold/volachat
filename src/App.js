@@ -42,29 +42,8 @@ class App extends React.Component {
     console.log(this.prefersDarkMode, theme)
   }
 
-  selectChat = (user) => {
-    this.setState({ selectedChat: user });
-  }
-
-  selectInput = (mInput) => {
-    this.setState({ messageInput: mInput }, () => { console.log(mInput) });
-  }
-
   setUserList = (userList) => {
     this.setState({ userList: userList });
-  }
-
-  addMessage = (message) => {
-    const userList = this.state.userList;
-    userList[this.state.selectedUserIndex].messages.push(message);
-    this.setState({
-      userList: sortChatByLastMessage(userList),
-      selectedUserIndex: 0
-    });
-  }
-
-  setSelectedUserIndex = (index) => {
-    this.setState({ selectedUserIndex: index });
   }
 
   render() {
@@ -73,21 +52,13 @@ class App extends React.Component {
         <div className="root">
           <MiniDrawer toggleTheme={this.toggleTheme} />
           <div className={"chat-list"}>
-            <ChatList className={"chatlist"}
-              selectChat={this.selectChat}
-              selectInput={this.selectInput}
-              selectedIndex={this.state.selectedUserIndex}
-              setSelectedUserIndex={this.setSelectedUserIndex}
-              userList={this.state.userList}
-              addMessage={this.addMessage}>
+            <ChatList className={"chatlist"}>
             </ChatList>
           </div>
           <div className={"chat-window"}>
             <ChatWindow
-              selectedChat={this.state.selectedChat}
               theme={this.state.theme}
-              messageInput={this.state.messageInput}
-              setUserList={this.setUserList}
+            // setUserList={this.setUserList}
             />
           </div>
         </div>

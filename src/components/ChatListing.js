@@ -9,6 +9,9 @@ import Typography from '@material-ui/core/Typography';
 import Tooltip from '@material-ui/core/Tooltip';
 import MessageInput from "./chat_window/MessageInput";
 
+import { connect } from "react-redux";
+import { selectInput } from "../redux/actions";
+
 import { getTimeDisplay } from "../utils/Helpers";
 
 const useStyles = makeStyles(theme => ({
@@ -36,7 +39,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function ChatListing(props) {
+function ChatListing(props) {
   const messageInput = <MessageInput addMessage={props.addMessage} />;
   const classes = useStyles();
 
@@ -49,7 +52,7 @@ export default function ChatListing(props) {
   useEffect(() => {
     // console.log(messageInput.inputValue);
     // console.log(messageInput);
-  })
+  }, [props.renderCount])
 
   return (
     <ListItem alignItems="flex-start"
@@ -96,3 +99,9 @@ export default function ChatListing(props) {
   );
 
 }
+const mapStateToProps = state => {
+  return {
+    renderCount: state.renderCount
+  }
+}
+export default connect(mapStateToProps, {selectInput})(ChatListing);

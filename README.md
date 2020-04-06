@@ -1,3 +1,13 @@
+<center>
+ <h2>VolaChat</h2>
+
+[![Circle CI](https://circleci.com/gh/09arnold/volachat.svg?style=svg)](https://circleci.com/gh/09arnold/volachat) 
+[![Maintainability](https://api.codeclimate.com/v1/badges/3f9c7ebd04d6418e966d/maintainability)](https://codeclimate.com/github/09arnold/volachat/maintainability)
+[![Issue Count](https://codeclimate.com/github/09arnold/volachat/badges/issue_count.svg)](https://codeclimate.com/github/09arnold/volachat)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/3f9c7ebd04d6418e966d/test_coverage)](https://codeclimate.com/github/09arnold/volachat/test_coverage)
+
+</center>
+
 ## A very very **_WIP_** Project
 Proper documentation coming soon
 

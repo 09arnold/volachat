@@ -3,11 +3,13 @@ import { makeStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 import Divider from '@material-ui/core/Divider';
 import Typography from "@material-ui/core/Typography";
+import { connect } from "react-redux";
 
 import ChatSearch from "./ChatSearch";
 
 import './../App.css';
 import { sortMessagesByTime } from "../utils/Helpers";
+import { selectInput, selectIndex, selectChat } from "../redux/actions";
 
 import ChatListing from "./ChatListing";
 
@@ -32,14 +34,14 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function ChatList(props) {
+function ChatList(props) {
   let searchTerm = '';
   const classes = useStyles();
   const [userList, setUserList] = React.useState(props.userList);
   const [userListDisplay, setUserListDisplay] = React.useState(props.userList);
 
   const handleListItemClick = (event, index, user) => {
-    props.setSelectedUserIndex(index);
+    props.selectIndex(index);
     props.selectChat(props.userList[index]);
   };
 
@@ -88,8 +90,8 @@ export default function ChatList(props) {
           user={user}
           selected={props.selectedIndex === index}
           key={index}
-          selectInput={props.selectInput} 
-          addMessage={props.addMessage}/>
+          selectInput={props.selectInput}
+        />
 
         {(() => {
           if (index !== userList.length - 1) {
@@ -102,7 +104,7 @@ export default function ChatList(props) {
 
   useEffect(() => {
     setUserList(props.userList);
-  }, [props.userList]);
+  }, [props.userList, props.triggerRender]);
 
   return (
     <div>
@@ -114,3 +116,17 @@ export default function ChatList(props) {
     </div>
   );
 }
+
+const mapStateToProps = state => {
+  return {
+    userList: state.chatList,
+    selectedIndex: state.selectedUserIndex,
+    triggerRender: state.triggerRender
+  }
+}
+
+export default connect(mapStateToProps, {
+  selectInput,
+  selectIndex,
+  selectChat
+})(ChatList);

@@ -2,12 +2,13 @@ import React, { useState, useEffect, useRef } from "react";
 
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
+import { connect } from "react-redux";
+import { selectChat } from "../../redux/actions";
 
 import './../../App.css';
 import logo from './../../logo.svg';
 
 import ChatWindowHeader from "./ChatWindowHeader";
-// import MessageInput from "./MessageInput";
 import ChatMessage from "./ChatMessage";
 
 const useStyles = makeStyles(theme => ({
@@ -71,21 +72,10 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function ChatWindow(props) {
+function ChatWindow(props) {
   const classes = useStyles();
   const [chatMessages, setChatMessages] = useState([]);
-  const [fake, setFake] = useState(0);
   const msgContatinerEl = useRef(null);
-
-  // const addMessage = (message) => {
-  //   setChatMessages(props.selectedChat.messages);
-  //   setFake(fake + 1);
-  //   props.addMessage(message);
-
-  //   setTimeout(() => {
-  //     msgContatinerEl.current.scrollTop = msgContatinerEl.current.scrollHeight;
-  //   }, 0);
-  // }
 
   const noChatSelected = (
     <header className={`${classes.noChatSelected}`}>
@@ -108,15 +98,13 @@ export default function ChatWindow(props) {
           ))}
         </div>
       </div>
-      {/* <MessageInput addMessage={addMessage} selectedChat={props.selectedChat}></MessageInput> */}
       {props.messageInput}
     </div>
   );
 
   useEffect(() => {
+    // console.log('CW props', props);
     if (props.selectedChat) {
-      // props.messageInput.addMessage = addMessage;
-      console.log('Chat selected', props.selectedChat);
       // sort by time
 
       // set chat messages
@@ -125,11 +113,20 @@ export default function ChatWindow(props) {
       setTimeout(() => {
         msgContatinerEl.current.scrollTop = msgContatinerEl.current.scrollHeight;
       }, 0);
-
     }
-  }, [props.selectedChat]);
+  }, [props.selectedChat, props.triggerRender]);
 
   return (
     <>{props.selectedChat ? chatView : noChatSelected}</>
   );
 }
+
+const mapStateToProps = state => {
+  return {
+    selectedChat: state.selectedChat,
+    messageInput: state.selectedInput,
+    triggerRender: state.renderCount
+  }
+};
+
+export default connect(mapStateToProps, { selectChat })(ChatWindow);
