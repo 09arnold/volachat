@@ -34,7 +34,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-function ChatList(props) {
+export function ChatList(props) {
   let searchTerm = '';
   const classes = useStyles();
   const [userList, setUserList] = React.useState(props.userList);

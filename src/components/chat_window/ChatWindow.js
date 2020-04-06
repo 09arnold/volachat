@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
+
 import { connect } from "react-redux";
 import { selectChat } from "../../redux/actions";
 
@@ -72,7 +73,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-function ChatWindow(props) {
+export function ChatWindow(props) {
   const classes = useStyles();
   const [chatMessages, setChatMessages] = useState([]);
   const msgContatinerEl = useRef(null);

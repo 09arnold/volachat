@@ -52,8 +52,7 @@ class App extends React.Component {
         <div className="root">
           <MiniDrawer toggleTheme={this.toggleTheme} />
           <div className={"chat-list"}>
-            <ChatList className={"chatlist"}>
-            </ChatList>
+            <ChatList className={"chatlist"} />
           </div>
           <div className={"chat-window"}>
             <ChatWindow
