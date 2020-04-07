@@ -83,35 +83,32 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
+const links = [
+  {
+    label: 'Starred Messages',
+    icon: <StarsIcon />,
+    url: '/starred'
+  }, {
+    label: 'New Group',
+    icon: <GroupAddIcon />,
+    url: '/new-group'
+  }, {
+    label: 'Settings',
+    icon: <SettingsIcon />,
+    url: '/settings'
+  }
+];
+
 export default function MiniDrawer(props) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const [themeIcon, setThemeIcon] = React.useState(<NightsStayIcon />);
   const [themeLabel, setThemeLabel] = React.useState('Dark Mode');
 
-  const handleDrawerOpen = () => {
-    setOpen(true);
-  };
+  const handleDrawerOpen = () => { setOpen(true) };
 
-  const handleDrawerClose = () => {
-    setOpen(false);
-  };
+  const handleDrawerClose = () => { setOpen(false) };
 
-  const links = [
-    {
-      label: 'Starred Messages',
-      icon: <StarsIcon />,
-      url: '/starred'
-    }, {
-      label: 'New Group',
-      icon: <GroupAddIcon />,
-      url: '/new-group'
-    }, {
-      label: 'Settings',
-      icon: <SettingsIcon />,
-      url: '/settings'
-    }
-  ];
 
   const toggleThemeI = () => {
     if (themeLabel === "Dark Mode") {

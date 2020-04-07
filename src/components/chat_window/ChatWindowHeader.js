@@ -94,13 +94,9 @@ export default function ChatWindowHeader(props) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
 
-  const handleClick = event => {
-    setAnchorEl(event.currentTarget);
-  };
+  const handleClick = event => { setAnchorEl(event.currentTarget) };
 
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
+  const handleClose = () => { setAnchorEl(null) };
 
   return (
     <AppBar position="static" className={classes.appBar} elevation={2}>

@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import MiniDrawer from "../components/MiniDrawer";
+import MiniDrawer from "../../components/MiniDrawer";
 
 test('renders mini drawer on side', () => {
   const { getByText } = render(<MiniDrawer />);
