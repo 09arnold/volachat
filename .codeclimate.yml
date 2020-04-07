@@ -1,6 +1,20 @@
 version: "2"
 exclude_patterns:
   - "src/__tests__/"
+  - "config/"
+  - "db/"
+  - "dist/"
+  - "features/"
+  - "**/node_modules/"
+  - "script/"
+  - "**/spec/"
+  - "**/test/"
+  - "**/tests/"
+  - "Tests/"
+  - "**/vendor/"
+  - "**/*_test.go"
+  - "**/*.d.ts"
+  - "**/src/utils/SampleData.js"
 checks:
   argument-count:
     config:
