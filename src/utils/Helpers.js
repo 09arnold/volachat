@@ -1,5 +1,5 @@
 export const is_date = function (input) {
-  if (Object.prototype.toString.call(input) === "[object Date]")
+  if (Object.prototype.toString.call(input) === "[object Date]" && input != 'Invalid Date')
     return true;
   return false;
 };
