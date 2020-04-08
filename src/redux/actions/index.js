@@ -39,9 +39,9 @@ export const triggerRender = (renderCount = 0) => {
   }
 }
 
-export const addChat = chat => {
+export const addChat = (chatList, chat) => {
   return {
     type: 'ADD_CHAT',
-    payload: chat
+    payload: { chatList, chat }
   }
 }

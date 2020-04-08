@@ -46,24 +46,20 @@ function MessageInput(props) {
   const [inputValue, setInputValue] = React.useState('');
 
   const handleKeyPress = event => {
-    if (event.which === 13) {
-      if (!event.ctrlKey && !event.altKey && !event.shiftKey) {
-        props.addMessage({
-          text: event.target.value,
-          time: new Date().toLocaleString(),
-          source: 'local'
-        }, props.chatList, props.selectedUserIndex);
+    if (event.which === 13 && !event.ctrlKey && !event.altKey && !event.shiftKey) {
+      event.persist();
 
-        props.selectIndex(0);
-        props.triggerRender(props.renderCount);
+      props.addMessage({
+        text: event.target.value,
+        time: new Date().toLocaleString(),
+        source: 'local'
+      }, props.chatList, props.selectedUserIndex);
+      props.selectIndex(0);
+      props.triggerRender(props.renderCount);
 
-        event.persist();
-
-        setTimeout(function () {
-          event.target.style = null;
-          event.target.value = null;
-        }, 0);
-      }
+      setTimeout(function () {
+        event.target.style = event.target.value = null;
+      }, 0);
     }
   };
 

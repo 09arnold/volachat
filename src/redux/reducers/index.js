@@ -4,17 +4,20 @@ import { sortChatByLastMessage } from "../../utils/Helpers";
 import { ChatListing } from "../../utils/SampleData";
 
 const chatListsReducer = (chatList = ChatListing, action) => {
-  if (action.type === 'GET_CHAT_LIST') {
-    return chatList;
+  if (action.type === 'ADD_MESSAGE') {
+    const { message, chatList, selectedIndex } = action.payload;
+    chatList[selectedIndex].messages.push(message);
   }
-  return chatList;
+  if (action.type === 'ADD_CHAT') {
+    chatList.push(action.payload.chat);
+  }
+  return sortChatByLastMessage(chatList);
 }
 
 const selectedChat = (selectedChat = null, action) => {
   if (action.type === 'SELECT_CHAT') {
     return action.payload;
   }
-
   return selectedChat;
 }
 
@@ -32,15 +35,6 @@ const selectedInput = (selectedInput = null, action) => {
   return selectedInput;
 }
 
-const addMessage = (chatList = ChatListing, action) => {
-  if (action.type === 'ADD_MESSAGE') {
-    const { message, chatList, selectedIndex } = action.payload;
-    chatList[selectedIndex].messages.push(message);
-    return sortChatByLastMessage(chatList);
-  }
-  return sortChatByLastMessage(chatList);
-}
-
 const triggerRender = (renderCount = 0, action) => {
   if (action.type === 'TRIGGER_RENDER') {
     return action.payload + 1;
@@ -49,7 +43,6 @@ const triggerRender = (renderCount = 0, action) => {
 }
 
 export default combineReducers({
-  addMessage,
   selectedChat,
   selectedInput,
   chatList: chatListsReducer,
