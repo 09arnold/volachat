@@ -15,7 +15,7 @@ describe('is_date: Check for valid dates', () => {
 describe('getTimeDisplay: Relative to 10/04/2020, a Friday', () => {
   test('Check for same day', () => {
     const output = Helpers.getTimeDisplay('2020-04-10 06:00:00', new Date('2020-04-10 01:00:00'));
-    expect(output).toBe('6:00:00 AM');
+    expect(output).toBe(new Date('2020-04-10 06:00:00').toLocaleTimeString());
   });
   test('Check for previous day', () => {
     const output = Helpers.getTimeDisplay('2020-04-09 06:00:00', new Date('2020-04-10 01:00:00'));
@@ -31,7 +31,7 @@ describe('getTimeDisplay: Relative to 10/04/2020, a Friday', () => {
   });
 });
 
-describe('dayOfWeekAsString: Get day of week from number[0-6]', () =>{
+describe('dayOfWeekAsString: Get day of week from number[0-6]', () => {
   test('Get day of 0', () => {
     expect(Helpers.dayOfWeekAsString(0)).toBe('Sunday');
   });
