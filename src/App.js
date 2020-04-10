@@ -1,26 +1,69 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import './App.css';
+import MiniDrawer from './components/MiniDrawer';
+import ChatList from './components/ChatList';
+import ChatWindow from './components/chat_window/ChatWindow';
+import * as Data from "./utils/SampleData";
+import { sortChatByLastMessage } from "./utils/Helpers";
+
+class App extends React.Component {
+
+  constructor() {
+    super();
+    this.lightTheme = createMuiTheme({
+      palette: {
+        type: 'light',
+      },
+    })
+    this.darkTheme = createMuiTheme({
+      palette: {
+        type: 'dark',
+      },
+    });
+    this.state = {
+      theme: this.lightTheme,
+      userList: sortChatByLastMessage(Data.ChatListing || [])
+    };
+
+  }
+
+  toggleTheme = (theme) => {
+    if (theme === 'dark') {
+      this.setState({ theme: this.darkTheme }, () => {
+        console.log(theme, this.state)
+      });
+    } else {
+      this.setState({ theme: this.lightTheme }, () => {
+        console.log(theme, this.state)
+      });
+    }
+    console.log(this.prefersDarkMode, theme)
+  }
+
+  setUserList = (userList) => {
+    this.setState({ userList: userList });
+  }
+
+  render() {
+    return (
+      <ThemeProvider theme={this.state.theme} >
+        <div className="root">
+          <MiniDrawer toggleTheme={this.toggleTheme} />
+          <div className={"chat-list"}>
+            <ChatList className={"chatlist"} />
+          </div>
+          <div className={"chat-window"}>
+            <ChatWindow
+              theme={this.state.theme}
+            // setUserList={this.setUserList}
+            />
+          </div>
+        </div>
+      </ThemeProvider>
+    );
+  }
 }
 
 export default App;
