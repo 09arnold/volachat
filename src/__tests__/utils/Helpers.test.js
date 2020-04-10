@@ -27,7 +27,7 @@ describe('getTimeDisplay: Relative to 10/04/2020, a Friday', () => {
   });
   test('Check for date 7 days prior', () => {
     const output = Helpers.getTimeDisplay('2020-04-03 01:00:00', new Date('2020-04-10 01:00:00'));
-    expect(output).toBe('4/3/2020');
+    expect(output).toBe(new Date('4/3/2020').toLocaleDateString());
   });
 });
 
