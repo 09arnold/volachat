@@ -26,11 +26,6 @@ jobs:
             npm test -- --coverage
             ./cc-test-reporter after-build --exit-code $?
   deploy:
-    requires:
-      - build # only deploy once build job has completed
-    filters:
-      branches:
-        only: deploy # only deploy on the deploy branch
     docker:
       - image: circleci/node:8
     steps:
@@ -41,3 +36,14 @@ jobs:
           name: Deploy Over SSH
           command: |
             ssh $SSH_USER@$SSH_HOST "cd ~ && ./deploy.sh"
+workflows:
+  version: 2
+  build_and_deploy:
+    jobs:
+      - build
+      - deploy:
+          requires:
+            - build # only deploy once build job has completed
+          filters:
+            branches:
+              only: deploy # only deploy on the deploy branch
