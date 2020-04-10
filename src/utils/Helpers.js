@@ -4,51 +4,42 @@ export const is_date = function (input) {
   return false;
 };
 
-export const getTimeDisplay = function (date) {
-  if (typeof (date) === "string") {
-    date = new Date(date);
+export const getTimeDisplay = function (date, curDate = new Date()) {
+  // if date is invalid, return ''
+  if (typeof (date) === "string") date = new Date(date);
+  if (!is_date(date)) return '';
+  let resultDate;
+  // get number of days between curDate and date
+  const daysDiff = daysBetween(date, curDate);
+  // if today, return the time
+  if (daysDiff === 0) {
+    resultDate = date.toLocaleTimeString();
+  }// if yesterday, return yesterday
+  else if (daysDiff === 1) {
+    resultDate = 'Yesterday';
+  }// if within 7 days, return day of week
+  else if (1 < daysDiff && daysDiff < 7) {
+    resultDate = dayOfWeekAsString(date.getDay());
+  }// return the date
+  else {
+    resultDate = date.toLocaleDateString()
   }
-  if (!is_date(date)) {
-    return '';
-  }
-  const curDate = new Date();
-
-  // if the date is today, return the time
-  if (curDate.toLocaleDateString() === date.toLocaleDateString()) {
-    return date.toLocaleTimeString();
-  }
-
-  // if the date is yesterday, return 'yesterday'
-  if (curDate.getMonth() === date.getMonth() && curDate.getFullYear() === date.getFullYear()) {
-    // eslint-disable-next-line
-    if (curDate.getDay() === 0 && date.getDay() === 6 ||
-      curDate.getDay() - 1 === date.getDay()) {
-      return 'yesterday';
-    }
-  }
-
-  // if the date is within the last 7 days, return the day string
-  if ((curDate.getTime() - date.getTime()) / dayMillis < 7) {
-    return dayOfWeekAsString(date.getDay());
-  }
-
-  // return the date
-  return date.toLocaleDateString();
+  return resultDate;
 }
 
-export const getWeekFromDate = function (date) {
-  let now = new Date();
-  let onejan = new Date(now.getFullYear(), 0, 1);
-  return Math.ceil((((date - onejan) / 86400000) + onejan.getDay() + 1) / 7);
-}
+// export const getWeekFromDate = function (date) {
+//   let now = new Date();
+//   let onejan = new Date(now.getFullYear(), 0, 1);
+//   return Math.ceil((((date - onejan) / 86400000) + onejan.getDay() + 1) / 7);
+// }
 
 /**
-* Converts a day number to a string.
+* Returns day name from number[0-6], with Sunday as 0
 *
 * @param {Number} dayIndex
 * @return {String} Returns day as string
 */
-function dayOfWeekAsString(dayIndex) {
+export function dayOfWeekAsString(dayIndex) {
   return ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"][dayIndex];
 }
 
@@ -71,4 +62,7 @@ export const sortChatByLastMessage = function (chats) {
   );
 }
 
-const dayMillis = 1000 * 60 * 60 * 24;
+export const daysBetween = (date1, date2) => {
+  const oneDay = 24 * 60 * 60 * 1000; // hours*minutes*seconds*milliseconds
+  return Math.round(Math.abs((date1 - date2) / oneDay));
+}
