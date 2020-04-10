@@ -25,3 +25,19 @@ jobs:
             ./cc-test-reporter before-build
             npm test -- --coverage
             ./cc-test-reporter after-build --exit-code $?
+  deploy:
+    requires:
+      - build # only deploy once build job has completed
+    filters:
+      branches:
+        only: deploy # only deploy on the deploy branch
+    docker:
+      - image: circleci/node:8
+    steps:
+      - add_ssh_keys:
+          fingerprints:
+            - "SHA256:HGlRyr6YKWnzNeCc9zLWilruJv9dpws6mHRrrIfAxLo 09arnold.aq@gmail.com"
+      - run:
+          name: Deploy Over SSH
+          command: |
+            ssh $SSH_USER@$SSH_HOST "cd ~ && ./deploy.sh"
