@@ -5,22 +5,21 @@ export const is_date = function (input) {
 };
 
 export const getTimeDisplay = function (date, curDate = new Date()) {
-  // if date is invalid, return ''
-  if (typeof (date) === "string") date = new Date(date);
-  if (!is_date(date)) return '';
-  let resultDate;
-  // get number of days between curDate and date
-  const daysDiff = daysBetween(date, curDate);
-  // if today, return the time
+  date = new Date(date); // Make sure we have a date object
+
+  if (!is_date(date)) return 'Invalid Date';
+
+  let resultDate, daysDiff = daysBetween(date, curDate);
+
   if (daysDiff === 0) {
     resultDate = date.toLocaleTimeString();
-  }// if yesterday, return yesterday
+  }
   else if (daysDiff === 1) {
     resultDate = 'Yesterday';
-  }// if within 7 days, return day of week
+  }
   else if (1 < daysDiff && daysDiff < 7) {
     resultDate = dayOfWeekAsString(date.getDay());
-  }// return the date
+  }
   else {
     resultDate = date.toLocaleDateString()
   }
