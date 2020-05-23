@@ -2,15 +2,15 @@ import React from 'react';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 
 import './App.css';
-import MiniDrawer from './components/MiniDrawer';
+import MiniDrawer from './components/MiniDrawer/MiniDrawer';
 import ChatList from './components/ChatList';
 import ChatWindow from './components/chat_window/ChatWindow';
-import * as Data from "./utils/SampleData";
-import { sortChatByLastMessage } from "./utils/Helpers";
+import AppStorage from './utils/app-storage';
+import { connect } from 'react-redux';
 
 class App extends React.Component {
 
-  constructor() {
+  constructor(props) {
     super();
     this.lightTheme = createMuiTheme({
       palette: {
@@ -23,27 +23,19 @@ class App extends React.Component {
       },
     });
     this.state = {
-      theme: this.lightTheme,
-      userList: sortChatByLastMessage(Data.ChatListing || [])
+      theme: AppStorage.getItem('appTheme') === 'light' ? this.lightTheme : this.darkTheme,
     };
-
   }
 
-  toggleTheme = (theme) => {
-    if (theme === 'dark') {
-      this.setState({ theme: this.darkTheme }, () => {
-        console.log(theme, this.state)
-      });
-    } else {
-      this.setState({ theme: this.lightTheme }, () => {
-        console.log(theme, this.state)
-      });
-    }
-    console.log(this.prefersDarkMode, theme)
+  toggleTheme = theme => {
+    this.setState({ theme: theme === 'dark' ? this.darkTheme : this.lightTheme });
   }
 
-  setUserList = (userList) => {
-    this.setState({ userList: userList });
+  componentDidUpdate = (newProps, someProps) => {
+    // if (newProps.appTheme !== this.state.theme.palette.type) {
+    //   console.log(newProps, someProps);
+    //   this.setState({ theme: newProps.appTheme === 'dark' ? this.darkTheme : this.lightTheme });
+    // }
   }
 
   render() {
@@ -55,10 +47,7 @@ class App extends React.Component {
             <ChatList className={"chatlist"} />
           </div>
           <div className={"chat-window"}>
-            <ChatWindow
-              theme={this.state.theme}
-            // setUserList={this.setUserList}
-            />
+            <ChatWindow theme={this.state.theme} />
           </div>
         </div>
       </ThemeProvider>
@@ -66,4 +55,10 @@ class App extends React.Component {
   }
 }
 
-export default App;
+const mapStateToProps = (state) => {
+  return {
+    appTheme: state.appTheme
+  }
+}
+
+export default connect(mapStateToProps)(App);

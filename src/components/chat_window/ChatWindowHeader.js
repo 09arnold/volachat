@@ -107,7 +107,7 @@ export default function ChatWindowHeader(props) {
             <ListItemAvatar>
               <Avatar
                 alt={props.selectedChat && props.selectedChat.userName}
-                src={props.selectedChat && props.selectedChat.avatar.src}
+                src={props.selectedChat && props.selectedChat.avatar}
                 className={classes.large}
               />
             </ListItemAvatar>
@@ -132,7 +132,7 @@ export default function ChatWindowHeader(props) {
                   className={classes.inline}
                   color="textPrimary"
                 >
-                  {getTimeDisplay(props.selectedChat && props.selectedChat.lastOnline)}
+                  {props.selectedChat && props.selectedChat.peerConnection && props.selectedChat.peerConnection.open ? 'Online' : getTimeDisplay(props.selectedChat && props.selectedChat.lastOnline)}
                 </Typography>
               }
             />

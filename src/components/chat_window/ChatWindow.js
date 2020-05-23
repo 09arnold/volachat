@@ -4,7 +4,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 
 import { connect } from "react-redux";
-import { selectChat } from "../../redux/actions";
+import { selectChat, addChat, triggerRender, selectIndex } from "../../redux/actions";
 
 import './../../App.css';
 import logo from './../../logo.svg';
@@ -126,8 +126,16 @@ const mapStateToProps = state => {
   return {
     selectedChat: state.selectedChat,
     messageInput: state.selectedInput,
-    triggerRender: state.renderCount
+    triggerRender: state.renderCount,
+    chatList: state.chatList,
+    renderCount: state.renderCount
   }
 };
 
-export default connect(mapStateToProps, { selectChat })(ChatWindow);
+export default connect(mapStateToProps, {
+  selectChat,
+  addChat,
+  triggerRender,
+  selectIndex
+}
+)(ChatWindow);

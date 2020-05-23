@@ -14,6 +14,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 
 import { connect } from "react-redux";
 import { addMessage, selectIndex, selectChat, triggerRender } from "../../redux/actions";
+import { sendMessage } from "../../webrtc";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -47,32 +48,32 @@ function MessageInput(props) {
 
   const handleKeyPress = event => {
     if (event.which === 13 && !event.ctrlKey && !event.altKey && !event.shiftKey) {
-      event.persist();
-
-      props.addMessage({
-        text: event.target.value,
-        time: new Date().toLocaleString(),
-        source: 'local'
-      }, props.chatList, props.selectedUserIndex);
-      props.selectIndex(0);
-      props.triggerRender(props.renderCount);
-
-      setTimeout(function () {
-        event.target.style = event.target.value = null;
-      }, 0);
+      localSendMessage();
     }
   };
 
+  const localSendMessage = () => {
+    if (!inputValue.trim()) return;
+
+    props.addMessage({
+      text: inputValue,
+      time: new Date().toLocaleString(),
+      source: 'local'
+    }, props.chatList, props.selectedUserIndex);
+    props.selectIndex(0);
+    props.triggerRender(props.renderCount);
+
+    setTimeout(() => {
+      sendMessage(props.peerConnection, inputValue, props.selectedChat.id);
+    }, 0);
+
+    setTimeout(function () {
+      setInputValue('');
+    }, 0);
+  }
+
   const handleChange = event => {
     setInputValue(event.target.value);
-    // const val = event.target.value;
-    // if (inputValue == '') {
-    //   setInputValue(null);
-    // }
-    // event.persist()
-    // setTimeout(() => {
-    //   setInputValue(val);
-    // }, 0);
   }
 
   const handleAttachmentClick = event => {
@@ -108,7 +109,7 @@ function MessageInput(props) {
         </IconButton>
 
         <Divider className={classes.divider} orientation="vertical" />
-        <IconButton className={classes.iconButton} aria-label="directions">
+        <IconButton className={classes.iconButton} aria-label="directions" onClick={localSendMessage}>
           <SendIcon />
         </IconButton>
       </Paper>
@@ -132,7 +133,8 @@ const mapStateToProps = state => {
     chatList: state.chatList,
     selectedUserIndex: state.selectedUserIndex,
     selectedChat: state.selectedChat,
-    renderCount: state.renderCount
+    renderCount: state.renderCount,
+    peerConnection: state.selectedChat.peerConnection
   };
 }
 

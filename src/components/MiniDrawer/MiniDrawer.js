@@ -10,14 +10,11 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 
-import ExitToApp from "@material-ui/icons/ExitToApp";
-import GroupAddIcon from '@material-ui/icons/GroupAdd';
-import StarsIcon from "@material-ui/icons/Stars";
-import SettingsIcon from "@material-ui/icons/Settings";
-import NightsStayIcon from '@material-ui/icons/NightsStay';
-import WbSunnyIcon from '@material-ui/icons/WbSunny';
-
-import Tooltip from '@material-ui/core/Tooltip';
+import StarredMessages from "./StarredMessages";
+import NewGroup from './NewGroup';
+import NewMessageMenuItem from './NewChatMenuItem';
+import Settings from './SettingsMenuItem';
+import ThemeSelector from './ThemeSelector';
 
 const drawerWidth = 240;
 
@@ -83,44 +80,13 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const links = [
-  {
-    label: 'Starred Messages',
-    icon: <StarsIcon />,
-    url: '/starred'
-  }, {
-    label: 'New Group',
-    icon: <GroupAddIcon />,
-    url: '/new-group'
-  }, {
-    label: 'Settings',
-    icon: <SettingsIcon />,
-    url: '/settings'
-  }
-];
-
 export default function MiniDrawer(props) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
-  const [themeIcon, setThemeIcon] = React.useState(<NightsStayIcon />);
-  const [themeLabel, setThemeLabel] = React.useState('Dark Mode');
 
   const handleDrawerOpen = () => { setOpen(true) };
 
   const handleDrawerClose = () => { setOpen(false) };
-
-
-  const toggleThemeI = () => {
-    if (themeLabel === "Dark Mode") {
-      props.toggleTheme('dark');
-      setThemeIcon(<WbSunnyIcon />);
-      setThemeLabel("Light Mode")
-    } else {
-      props.toggleTheme('light');
-      setThemeIcon(<NightsStayIcon />);
-      setThemeLabel("Dark Mode")
-    }
-  }
 
   let menuButton = open ? (
     <ListItem style={{ flexGrow: "0" }}>
@@ -155,32 +121,16 @@ export default function MiniDrawer(props) {
           </div>
           <Divider variant="middle" />
           <List>
-            {links.map((link) => (
-              <ListItem button key={link.url} style={{ flexGrow: "0" }}>
-                <Tooltip title={link.label}>
-                  <ListItemIcon>{link.icon}</ListItemIcon>
-                </Tooltip>
-                <ListItemText primary={link.label} />
-              </ListItem>
-            ))}
+            <NewMessageMenuItem />
+            <StarredMessages />
+            <NewGroup />
+            <Settings />
           </List>
-          <Divider variant="middle" />
-          <ListItem button style={{ flexGrow: "0" }} onClick={toggleThemeI}>
-            <Tooltip title={themeLabel}>
-              <ListItemIcon>{themeIcon}</ListItemIcon>
-            </Tooltip>
-            <ListItemText primary={themeLabel} />
-          </ListItem>
           <Divider variant="middle" />
           <div className="vertical-strecth" style={{ height: "100%" }}></div>
           <Divider variant="middle" />
           <List>
-            <ListItem button style={{ flexGrow: "0" }}>
-              <Tooltip title={'Logout'}>
-                <ListItemIcon><ExitToApp /></ListItemIcon>
-              </Tooltip>
-              <ListItemText primary="Logout" />
-            </ListItem>
+            <ThemeSelector toggleTheme={props.toggleTheme} />
           </List>
         </Drawer >
       </ClickAwayListener>

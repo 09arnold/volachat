@@ -54,7 +54,11 @@ describe('sortChatByLastMessage: Sort chats by the timestamp of their last messa
     expect(ChatListing[0].messages[ChatListing[0].messages.length - 1].time).toBe("2019-06-26 06:37:13");
     Helpers.sortChatByLastMessage(ChatListing);
     expect(ChatListing[0].messages[ChatListing[0].messages.length - 1].time).toBe("2020-03-25 19:13:59");
-  })
+  });
+
+  // test('Check for sorting even if a chat has no messages', () => {
+    
+  // });
 });
 
 describe('daysBetween: Get the number of days between two dates', () => {

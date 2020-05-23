@@ -1,9 +1,9 @@
 import React from 'react';
-import { render } from '@testing-library/react';
+import { shallow } from "enzyme";
 import App from '../App';
 
-test('renders App page', () => {
-  // const { getByText } = render(<App />);
-  // const linkElement = getByText(/VolaChat/i);
-  // expect(linkElement).toBeInTheDocument();
+describe('App Component', () => {
+  it('renders App page', () => {
+    shallow(<App />);
+  });
 });
