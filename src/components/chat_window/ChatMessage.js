@@ -7,11 +7,12 @@ import CardContent from '@material-ui/core/CardContent';
 
 const useStyles = makeStyles(theme => ({
   root: {
-    width: '100%',
+    minWidth: theme.spacing(15),
     maxWidth: 500,
-    marginBottom: theme.spacing(1.25),
+    marginBottom: theme.spacing(.5),
     // backgroundColor: theme.palette.background.paper,
-    borderRadius: theme.spacing(2),
+    borderRadius: theme.spacing(1),
+    alignSelf: 'flex-start'
   },
   inline: {
     display: 'inline',
@@ -24,13 +25,13 @@ const useStyles = makeStyles(theme => ({
   },
   card: {
     borderBottomLeftRadius: '0px',
-    borderRadius: theme.spacing(2),
-    borderBottomRightRadius: theme.spacing(2)
+    borderRadius: theme.spacing(.5),
+    borderBottomRightRadius: theme.spacing(.5)
   },
   cardContent: {
     display: 'flex',
     flexDirection: 'column',
-    padding: theme.spacing(1.25),
+    padding: theme.spacing(1),
     '&:last-child': {
       paddingBottom: theme.spacing(1)
     },
@@ -41,7 +42,7 @@ const useStyles = makeStyles(theme => ({
   localMessage: {
     alignSelf: 'flex-end',
     '& $card': {
-      borderBottomLeftRadius: theme.spacing(2),
+      borderBottomLeftRadius: theme.spacing(.5),
       borderBottomRightRadius: '0px',
     }
   },

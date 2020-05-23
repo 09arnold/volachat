@@ -104,7 +104,7 @@ export function ChatList(props) {
 
   useEffect(() => {
     setUserList(props.userList);
-  }, [props.userList, props.triggerRender]);
+  }, [props.userList, props.renderCount]);
 
   return (
     <div>
@@ -121,7 +121,7 @@ const mapStateToProps = state => {
   return {
     userList: state.chatList,
     selectedIndex: state.selectedUserIndex,
-    triggerRender: state.triggerRender
+    renderCount: state.renderCount
   }
 }
 

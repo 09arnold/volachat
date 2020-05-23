@@ -54,6 +54,9 @@ export const sortMessagesByTime = function (messages) {
 export const sortChatByLastMessage = function (chats) {
   return chats.sort(
     (a, b) => {
+      if (!a.messages.length || !b.messages.length) {
+        return 1;
+      }
       const a1 = new Date(a.messages[a.messages.length - 1].time).getTime(),
         b1 = new Date(b.messages[b.messages.length - 1].time).getTime();
       return b1 - a1;
