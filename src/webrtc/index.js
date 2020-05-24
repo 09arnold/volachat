@@ -3,7 +3,7 @@ import Peer from "peerjs";
 import AppStorage from "../utils/app-storage";
 import { ConnectionMessage, TextMessage, CreateMessage, CreateChat } from "../utils/MessageHelpers";
 import { addChat, triggerRender, addMessage, setPeerConnection, peerOffline } from "../redux/actions";
-import { reduxStore } from '../index';
+import reduxStore from '../redux/store';
 
 const localPeerId = AppStorage.getItem('peerId');
 const userName = AppStorage.getItem('userName');
@@ -100,7 +100,7 @@ const sendMessage = async (conn, message, id) => {
     reduxStore.dispatch(
       setPeerConnection(id, conn, reduxStore.getState().chatList)
     );
-    
+
     return conn;
   } else {
     conn.send(

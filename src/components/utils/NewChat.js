@@ -5,14 +5,12 @@ import TextField from '@material-ui/core/TextField';
 import { Typography } from '@material-ui/core';
 
 import AppDialog from "./AppDialog";
-import AppStorage from '../../utils/app-storage';
 import { getPeerConnection } from "../../webrtc";
 import { addChat, selectIndex, selectChat, triggerRender } from "../../redux/actions";
 
-const NewMessage = function (props) {
+const NewChat = function (props) {
   const [peerId, setPeerId] = useState('');
   let [conn, setConn] = useState();
-  const volachat = AppStorage.getItem('volachat')
 
   const handlePeerIDChange = event => {
     setPeerId(event.target.value);
@@ -26,7 +24,6 @@ const NewMessage = function (props) {
     conn.on('open', () => {
       props.closeModal();
     })
-
   }
 
   const dialogButtons = [
@@ -69,4 +66,4 @@ const mapStateToProps = state => {
   };
 }
 
-export default connect(mapStateToProps, { addChat, selectIndex, selectChat, triggerRender })(NewMessage);
+export default connect(mapStateToProps, { addChat, selectIndex, selectChat, triggerRender })(NewChat);

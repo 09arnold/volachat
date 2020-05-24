@@ -47,9 +47,6 @@ const useStyles = makeStyles(theme => ({
 }));
 
 function ChatListing(props) {
-  // if (!props.user.peerConnection) {
-  //   props.getPeerConnection(props.user.id, props.chatList);
-  // }
   const messageInput = <MessageInput addMessage={props.addMessage} peerConnection={props.user.peerConnection} />;
   const classes = useStyles();
 

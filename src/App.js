@@ -41,7 +41,7 @@ class App extends React.Component {
   render() {
     return (
       <ThemeProvider theme={this.state.theme} >
-        <div className="root">
+        <div className="root main">
           <MiniDrawer toggleTheme={this.toggleTheme} />
           <div className={"chat-list"}>
             <ChatList className={"chatlist"} />
@@ -60,5 +60,7 @@ const mapStateToProps = (state) => {
     appTheme: state.appTheme
   }
 }
+
+export { App };
 
 export default connect(mapStateToProps)(App);
