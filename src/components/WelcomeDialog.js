@@ -11,8 +11,6 @@ import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import SwipeableViews from 'react-swipeable-views';
 
-import VpnLockIcon from '@material-ui/icons/VpnLock';
-
 import TextField from '@material-ui/core/TextField';
 
 const useStyles = makeStyles((theme) => ({
@@ -21,7 +19,6 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.background.paper,
     display: 'flex',
     flexDirection: 'column',
-    // height: 224,
   },
   verticalForm: {
     display: 'flex',
@@ -46,11 +43,14 @@ const useStyles = makeStyles((theme) => ({
   stepper: {
     backgroundColor: theme.palette.background.paper,
     // transition: 'visibility 330ms'
+  },
+  stretch: {
+    display: 'flex',
+    flexGrow: 1
   }
 }));
 
 export default function WelcomeDialog(props) {
-
   const classes = useStyles();
   const theme = useTheme();
 
@@ -58,72 +58,48 @@ export default function WelcomeDialog(props) {
   const [peerId] = useState(AppStorage.getItem('peerId') || new Date().getTime());
   const [userName, setUserName] = useState(AppStorage.getItem('userName') || '');
 
-
-  // const handleChange = (event, newValue) => {
-  //   setValue(newValue);
-  // };
-
-  // const saveConfig = event => {
-  //   AppStorage.setItem('volachat', {
-  //     ...volachat,
-  //     name,
-  //     peerId
-  //   });
-  //   props.close();
-  // }
-
   const handleNameChange = event => {
     setUserName(event.target.value);
   }
 
   const handleWelcomeClose = (event) => {
-    // AppStorage.setItem('volachat', {
-    //   ...volachat,
-    //   name,
-    //   peerId
-    // });
     AppStorage.setItem('peerId', peerId);
     AppStorage.setItem('userName', userName);
     props.closeModal()
   };
 
   const steps = [
-    (
-      <>
-        <Typography variant="h4" gutterBottom>
-          Welcome to Volachat
+    (<>
+      <Typography variant="h4" gutterBottom>
+        Welcome to Volachat
             </Typography>
-        <div style={{ flexGrow: 1 }}></div>
-        <Typography variant="body2" style={{ margin: theme.spacing(3) }}>
-          Volachat is a WebRTC powered communications app. This means your messages <em>don't go through any server</em>.
+      <div style={{ flexGrow: 1 }}></div>
+      <Typography variant="body2" style={{ margin: theme.spacing(3) }}>
+        Volachat is a WebRTC powered communications app. This means your messages <em>don't go through any server</em>.
               <br />
               They are transmitted directly to whoever you're messaging!
             </Typography>
 
-      </>
-    ),
-    (
-      <>
-        <Typography variant="h4" gutterBottom>
-          Everything is Local!
+    </>),
+    (<>
+      <Typography variant="h4" gutterBottom>
+        Everything is Local!
             </Typography>
-        {/* <VpnLockIcon style={{ fontSize: 40 }} /> */}
-        <div style={{ flexGrow: 1, display: 'flex' }}>
-          <img src='/img/local.png' alt='Some image about "local"' style={{ width: theme.spacing(30), height: theme.spacing(30), margin: 'auto' }} />
-        </div>
-        <Typography variant="body2" style={{ margin: theme.spacing(3) }}>
-          Your entire chat experience exists only in the <strong>localStorage</strong> of the browser you're using.
+      <div className={classes.stretch}>
+        <img src='/img/local.png' alt='Some image about "local"' style={{ width: theme.spacing(30), height: theme.spacing(30), margin: 'auto' }} />
+      </div>
+      <Typography variant="body2" style={{ margin: theme.spacing(3) }}>
+        Your entire chat experience exists only in the <strong>localStorage</strong> of the browser you're using.
               <br />
-        </Typography>
-      </>
-    ),
+      </Typography>
+    </>),
     (
       <>
         <Typography variant="h6" gutterBottom>
           ...Local Storage for all the things
             </Typography>
         {/* <VpnLockIcon style={{ fontSize: 40 }} /> */}
-        <div style={{ flexGrow: 1, display: 'flex' }}>
+        <div className={classes.stretch}>
           <img src='/img/safe.png' alt='Some image about "local"' style={{ width: theme.spacing(30), height: theme.spacing(30), margin: 'auto' }} />
         </div>
         <small style={{ margin: theme.spacing(3) }}>
@@ -136,38 +112,30 @@ export default function WelcomeDialog(props) {
         </small>
       </>
     ),
-    (
-      <>
-        <Typography variant="h4" gutterBottom>
-          Let's get started
+    (<>
+      <Typography variant="h4" gutterBottom>
+        Let's get started
             </Typography>
-        <div style={{ flexGrow: 1, display: 'flex' }}>
-          <img src='/img/chat.png' alt='It appears this image belongs to Atlassian' style={{ height: theme.spacing(25), margin: 'auto' }} />
-        </div>
-        <div style={{ flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
-          <TextField
-            id="name"
-            label="Name"
-            value={userName}
-            style={{ alignSelf: 'center', margin: 'auto', minWidth: theme.spacing(56.25) }}
-            onChange={handleNameChange}
-            helperText="Name that appears in friends' chat list"
-          />
-          <TextField
-            id="peerid"
-            label="Peer ID"
-            disabled
-            defaultValue={peerId}
-            helperText="Other users will connect to you using this ID"
-          />
-        </div>
-        <div>
-          {/* <div style={{ marginTop: theme.spacing(2) }}>
-                <Button variant='contained' color='primary' onClick={handleNext}>Let's Start</Button>
-              </div> */}
-        </div>
-      </>
-    )
+      <div className={classes.stretch}>
+        <img src='/img/chat.png' alt='It appears this image belongs to Atlassian' style={{ height: theme.spacing(25), margin: 'auto' }} />
+      </div>
+      <div style={{ flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
+        <TextField
+          id="name"
+          label="Name"
+          value={userName}
+          style={{ alignSelf: 'center', margin: 'auto', minWidth: theme.spacing(56.25) }}
+          onChange={handleNameChange}
+          helperText="Name that appears in friends' chat list"
+        />
+        <TextField disabled
+          id="peerid"
+          label="Peer ID"
+          defaultValue={peerId}
+          helperText="Other users will connect to you using this ID"
+        />
+      </div>
+    </>)
   ];
 
   // Stepper handlers and buttons
@@ -216,13 +184,11 @@ export default function WelcomeDialog(props) {
           nextButton={nextButton}
           backButton={
             <Button size="small" onClick={handleBack} disabled={activeStep === 0}>
-              {theme.direction === 'rtl' ? <KeyboardArrowRight /> : <KeyboardArrowLeft />}
-          Back
-        </Button>
+              {theme.direction === 'rtl' ? <KeyboardArrowRight /> : <KeyboardArrowLeft />} Back
+            </Button>
           }
         />
       </div>
     </AppDialog>
   );
 }
-
