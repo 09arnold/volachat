@@ -24,6 +24,7 @@ const useStyles = makeStyles(theme => ({
     display: 'block'
   },
   card: {
+    backgroundColor: theme.palette.background.paper,
     borderBottomLeftRadius: '0px',
     borderRadius: theme.spacing(.5),
     borderBottomRightRadius: theme.spacing(.5)
@@ -60,8 +61,8 @@ export default function ChatMessage(props) {
 
   return (
     <div className={`${classes.root} ${message.source === 'local' ? classes.localMessage : ''}`}>
-      <Card className={classes.card}>
-        <CardContent className={classes.cardContent}>
+      <div className={classes.card}>
+        <div className={classes.cardContent}>
           <Typography
             display="block"
             variant="body2"
@@ -77,8 +78,8 @@ export default function ChatMessage(props) {
           >
             {message.time && new Date(message.time).toLocaleTimeString()}
           </Typography>
-        </CardContent>
-      </Card>
+        </div>
+      </div>
 
       {/* <div>{message.text && message.text}</div>
       <div>{message.time && message.time}</div> */}

@@ -9,7 +9,7 @@ import Tooltip from '@material-ui/core/Tooltip';
 export default function NewGroup(props) {
   return (
     <Tooltip title={'New Group'}>
-      < ListItem button style={{ flexGrow: "0" }}>
+      < ListItem button style={{ flexGrow: "0" }} disabled>
         <ListItemIcon><GroupAddIcon /></ListItemIcon>
         <ListItemText primary={'New Group'} />
       </ListItem >

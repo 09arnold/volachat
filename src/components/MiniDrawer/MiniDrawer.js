@@ -9,12 +9,18 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
+import Avatar from '@material-ui/core/Avatar';
+import ListItemAvatar from '@material-ui/core/ListItemAvatar';
+import Tooltip from '@material-ui/core/Tooltip';
 
 import StarredMessages from "./StarredMessages";
 import NewGroup from './NewGroup';
 import NewMessageMenuItem from './NewChatMenuItem';
 import Settings from './SettingsMenuItem';
 import ThemeSelector from './ThemeSelector';
+import { connect } from 'react-redux';
+
+import { getInitials } from "../../utils/Helpers";
 
 const drawerWidth = 240;
 
@@ -55,6 +61,8 @@ const useStyles = makeStyles(theme => ({
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen,
     }),
+    overflow: 'hidden',
+    boxShadow: '0 0 15px 0px rgba(0, 0, 0, 0.1)',
   },
   drawerClose: {
     transition: theme.transitions.create('width', {
@@ -78,9 +86,21 @@ const useStyles = makeStyles(theme => ({
     flexGrow: 1,
     padding: theme.spacing(3),
   },
+  small: {
+    width: theme.spacing(3),
+    height: theme.spacing(3),
+    fontSize: theme.spacing(1.5),
+    fontWeight: 600
+  },
+  large: {
+    width: theme.spacing(7),
+    height: theme.spacing(7),
+    fontSize: theme.spacing(2.33),
+    fontWeight: 600
+  },
 }));
 
-export default function MiniDrawer(props) {
+const MiniDrawer = (props) => {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
 
@@ -119,21 +139,40 @@ export default function MiniDrawer(props) {
           <div>
             {menuButton}
           </div>
-          <Divider variant="middle" />
-          <List>
-            <NewMessageMenuItem />
-            <StarredMessages />
-            <NewGroup />
-            <Settings />
-          </List>
-          <Divider variant="middle" />
-          <div className="vertical-strecth" style={{ height: "100%" }}></div>
-          <Divider variant="middle" />
-          <List>
-            <ThemeSelector toggleTheme={props.toggleTheme} />
-          </List>
+          {/* <Divider variant="middle" /> */}
+          <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
+            <List style={{ margin: 'auto 0' }}>
+              <NewMessageMenuItem />
+              <StarredMessages />
+              <NewGroup />
+              <ThemeSelector toggleTheme={props.toggleTheme} />
+              <Settings />
+            </List>
+            {/* <Divider variant="middle" /> */}
+            {/* <div className="vertical-strecth" style={{ height: "100%" }}></div> */}
+            {/* <Divider variant="middle" /> */}
+            <List>
+              <ListItem>
+                <ListItemAvatar>
+                  <Tooltip title={props.userName}>
+                    <Avatar alt="Remy Sharp" src="/broken-image.jpg" className={classes.small}>
+                      {getInitials(props.userName)}
+                    </Avatar>
+                  </Tooltip>
+                </ListItemAvatar>
+              </ListItem>
+            </List>
+          </div>
         </Drawer >
       </ClickAwayListener>
     </div>
   );
 }
+
+const mapStateToProps = state => {
+  return {
+    userName: state.userName,
+  }
+}
+
+export default connect(mapStateToProps)(MiniDrawer);

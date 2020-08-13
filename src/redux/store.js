@@ -4,11 +4,19 @@ import reducers from "./reducers";
 import AppStorage from "../utils/app-storage";
 
 const persistedState = AppStorage.getAll();
-const reduxStore = createStore(reducers, persistedState)
+const reduxStore = createStore(reducers, persistedState);
 
-let initialRenderCount = reduxStore.getState().renderCount
+let initialRenderCount = reduxStore.getState().renderCount;
+let debounceTimeoutId = 0;
 
 reduxStore.subscribe(() => {
+  clearTimeout(debounceTimeoutId)
+  debounceTimeoutId = setTimeout(() => {
+    updateAppStorage();
+  }, 750);
+});
+
+const updateAppStorage = () => {
   if (initialRenderCount !== reduxStore.getState().renderCount) {
     let tempList = reduxStore.getState().chatList.map((chat, index) => {
       let newChat = { ...chat }
@@ -19,6 +27,6 @@ reduxStore.subscribe(() => {
     initialRenderCount = reduxStore.getState().renderCount;
   }
   AppStorage.setItem('appTheme', reduxStore.getState().appTheme);
-});
+}
 
 export default reduxStore;

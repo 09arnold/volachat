@@ -15,15 +15,32 @@ import ChatListing from "./ChatListing";
 
 const useStyles = makeStyles(theme => ({
   root: {
+    display: 'flex',
+    flexDirection: 'column',
+    height: '100%',
+    overflow: 'hidden',
+    backgroundColor: theme.palette.background.paper,
+    padding: theme.spacing(2, 3),
+    borderRight: `1px solid ${theme.palette.divider}`,
+    '&> *:not(:first-child)': {
+    },
+  },
+  chatListContainer: {
+    marginLeft: theme.spacing(-2),
+    marginRight: theme.spacing(-2.5),
+    padding: theme.spacing(0, 2, 2),
+    overflow: 'auto',
+    flexGrow: 1,
+  },
+  chatList: {
+    marginBottom: theme.spacing(3),
     width: '100%',
     maxWidth: 360,
     minWidth: 360,
-    backgroundColor: theme.palette.background.paper,
     position: 'relative',
-    height: 'calc(100vh - 49px)',
-    overflow: 'auto',
-    padding: '0px',
-    borderRight: `1px solid ${theme.palette.divider}`
+    '& > *': {
+      marginBottom: theme.spacing(2)
+    }
   },
   inline: {
     display: 'inline',
@@ -92,12 +109,6 @@ export function ChatList(props) {
           key={index}
           selectInput={props.selectInput}
         />
-
-        {(() => {
-          if (index !== userList.length - 1) {
-            return <Divider variant="inset" component="li" />
-          }
-        })()}
       </div>
     ))
   }
@@ -107,12 +118,16 @@ export function ChatList(props) {
   }, [props.userList, props.renderCount]);
 
   return (
-    <div>
+    <div className={`${classes.root} scroll-area`}>
       <ChatSearch getSearchTerm={getSearchTerm} className={classes.iconButton}></ChatSearch>
-      <Divider variant="middle"></Divider>
-      <List className={`${classes.root} scroller`}>
-        {userListDisplay.length ? chatDisplay(userListDisplay) : noChatToDisplay()}
-      </List>
+      <Typography variant="h6" component="h6" color="textSecondary" style={{ margin: '18px 0' }}>
+        Messages
+      </Typography>
+      <div className={classes.chatListContainer}>
+        <List className={classes.chatList}>
+          {userListDisplay.length ? chatDisplay(userListDisplay) : noChatToDisplay()}
+        </List>
+      </div>
     </div>
   );
 }

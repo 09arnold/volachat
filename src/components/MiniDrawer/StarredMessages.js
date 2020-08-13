@@ -11,7 +11,7 @@ export default function StarredMessages(props) {
 
   return (
     <Tooltip title={'Starred Messages'}>
-      < ListItem button style={{ flexGrow: "0" }}>
+      < ListItem button style={{ flexGrow: "0" }} disabled>
         <ListItemIcon><StarIcon /></ListItemIcon>
         <ListItemText primary={'Starred Messages'} />
       </ListItem >

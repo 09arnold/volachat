@@ -57,15 +57,23 @@ export default function WelcomeDialog(props) {
   const [activeStep, setActiveStep] = useState(0);
   const [peerId] = useState(AppStorage.getItem('peerId') || new Date().getTime());
   const [userName, setUserName] = useState(AppStorage.getItem('userName') || '');
+  let [peerIdDisplay, setPeerIdDisplay] = useState(peerId);
 
   const handleNameChange = event => {
-    setUserName(event.target.value);
+    let uname = event.target.value;
+    setUserName(uname);
+    let fpeerId = (uname ? ('_' + uname.split(' ').join('_')) : '');
+    fpeerId = fpeerId.replace(/_+$/, "")
+      .replace(/[^\w\s]|(.)(?=\1)/g,'');
+    setPeerIdDisplay(peerId + fpeerId);
+    console.log(peerIdDisplay);
   }
 
   const handleWelcomeClose = (event) => {
-    AppStorage.setItem('peerId', peerId);
+    // split('_').slice(1, t.length - 1).join(' ')
+    AppStorage.setItem('peerId', peerIdDisplay);
     AppStorage.setItem('userName', userName);
-    props.closeModal()
+    props.closeModal();
   };
 
   const steps = [
@@ -131,7 +139,7 @@ export default function WelcomeDialog(props) {
         <TextField disabled
           id="peerid"
           label="Peer ID"
-          defaultValue={peerId}
+          value={peerIdDisplay}
           helperText="Other users will connect to you using this ID"
         />
       </div>
