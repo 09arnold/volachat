@@ -174,5 +174,5 @@ const mapStateToProps = state => {
     userName: state.userName,
   }
 }
-
+export { MiniDrawer };
 export default connect(mapStateToProps)(MiniDrawer);

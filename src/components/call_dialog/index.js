@@ -13,7 +13,7 @@ import Draggable from 'react-draggable';
 import { getLocalPeer, callPeer } from "../../webrtc/index";
 import { Typography } from '@material-ui/core';
 import Avatar from '@material-ui/core/Avatar';
-import ColorThief from "colorthief";
+import ColorThief from "color-thief";
 import Slide from '@material-ui/core/Slide';
 
 const useStyles = makeStyles((theme) => ({
