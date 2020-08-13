@@ -51,6 +51,9 @@ const useStyles = makeStyles((theme) => ({
   tabs: {
     borderRight: `1px solid ${theme.palette.divider}`,
   },
+  tabPanel: {
+    minHeight: theme.spacing(43.75)
+  },
   verticalForm: {
     display: 'flex',
     flexDirection: 'column',
@@ -115,7 +118,7 @@ export default function AppSettings(props) {
       <TabPanel value={value} index={2}>
         Notifications
       </TabPanel> */}
-        <TabPanel value={value} index={0}>
+        <TabPanel value={value} index={0} className={classes.tabPanel}>
           <form className={classes.verticalForm} noValidate autoComplete="off">
             <TextField
               id="name"
@@ -134,10 +137,10 @@ export default function AppSettings(props) {
             />
           </form>
         </TabPanel>
-        <TabPanel value={value} index={1}>
+        <TabPanel value={value} index={1} className={classes.tabPanel}>
           Storage
       </TabPanel>
-        <TabPanel value={value} index={2}>
+        <TabPanel value={value} index={2} className={classes.tabPanel}>
           Help
       </TabPanel>
       </div>

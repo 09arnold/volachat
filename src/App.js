@@ -1,12 +1,14 @@
 import React from 'react';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 
-import './App.css';
+// import './App.css';
 import MiniDrawer from './components/MiniDrawer/MiniDrawer';
 import ChatList from './components/ChatList';
 import ChatWindow from './components/chat_window/ChatWindow';
 import AppStorage from './utils/app-storage';
 import { connect } from 'react-redux';
+import CallDialog from './components/call_dialog';
+import { getLocalPeer } from './webrtc';
 
 class App extends React.Component {
 
@@ -23,8 +25,24 @@ class App extends React.Component {
       },
     });
     this.state = {
-      theme: AppStorage.getItem('appTheme') === 'light' ? this.lightTheme : this.darkTheme,
+      theme: AppStorage.getItem('appTheme') === 'dark' ? this.darkTheme : this.lightTheme,
+      incomingCaller: null,
+      openCallDialog: false
     };
+
+    if (!this.RTCPeer) {
+      (async () => {
+        this.RTCPeer = await getLocalPeer();
+        if (this.RTCPeer)
+          this.RTCPeer.on('call', incomingCall => {
+            // props.openDialog(true);
+            // setCallSnackbarOpen(true);
+            const chat = props.chatList.find(chat => chat.id == incomingCall.peer);
+            this.setState({ incomingCaller: chat })
+            console.log('Call ooo....', chat, incomingCall)
+          })
+      })();
+    }
   }
 
   toggleTheme = theme => {
@@ -36,6 +54,17 @@ class App extends React.Component {
     //   console.log(newProps, someProps);
     //   this.setState({ theme: newProps.appTheme === 'dark' ? this.darkTheme : this.lightTheme });
     // }
+    console.log(newProps, someProps)
+  }
+
+  closeCallModal = () => {
+    this.setState({ openCallDialog: false })
+  }
+  openCallDialog = () => {
+    this.setState({ openCallDialog: true })
+  }
+  closeCallDialog = () => {
+    this.setState({ openCallDialog: false })
   }
 
   render() {
@@ -47,9 +76,16 @@ class App extends React.Component {
             <ChatList className={"chatlist"} />
           </div>
           <div className={"chat-window"}>
-            <ChatWindow theme={this.state.theme} />
+            <ChatWindow theme={this.state.theme} openCallDialog={this.openCallDialog} />
           </div>
         </div>
+        <CallDialog
+          user={this.state.selectedChat || this.props.selectedChat}
+          incomingCaller={this.state.incomingCaller}
+          open={this.state.openCallDialog}
+          closeCallDialog={this.closeCallDialog}
+          openCallDialog={this.openCallDialog}
+        />
       </ThemeProvider>
     );
   }
@@ -57,7 +93,9 @@ class App extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    appTheme: state.appTheme
+    appTheme: state.appTheme,
+    selectedChat: state.selectedChat,
+    chatList: state.chatList
   }
 }
 

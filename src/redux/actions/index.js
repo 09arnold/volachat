@@ -74,10 +74,10 @@ export const setPeerConnection = (peerId, connection, chatList) => {
   }
 }
 
-export const peerOffline = (peerId) => {
+export const peerOffline = (peerId, chatList) => {
   return {
     type: 'PEER_OFFLINE',
-    payload: { peerId: Number(peerId) }
+    payload: { peerId: Number(peerId), chatList }
   }
 }
 

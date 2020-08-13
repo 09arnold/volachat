@@ -14,15 +14,18 @@ const chatListsReducer = (chatList = AppStorage.getItem('chatList') || [], actio
   }
   if (action.type === 'SET_PEER_CONNECTION') {
     let { peerId, connection, chatList } = action.payload;
-    const index = chatList.findIndex(chat => chat.id === peerId);
+    const index = chatList.findIndex(chat => Number(chat.id) === Number(peerId));
     if (index > -1) {
       chatList[index].peerConnection = connection;
+      chatList[index].online = true;
     }
   }
   if (action.type === 'PEER_OFFLINE') {
-    const index = chatList.findIndex(chat => chat.id === peerId);
+    let { peerId } = action.payload;
+    const index = chatList.findIndex(chat => Number(chat.id) === Number(peerId));
     if (index > -1) {
       chatList[index].lastOnline = new Date().toLocaleString();
+      chatList[index].online = false;
     }
   }
   return sortChatByLastMessage(chatList);
@@ -95,7 +98,7 @@ const peerConnection = async (peerConnection, action) => {
 
 const appTheme = (theme = 'light', action) => {
   if (action.type === 'SET_THEME') {
-      return action.payload;
+    return action.payload;
   }
   return theme;
 }

@@ -68,3 +68,27 @@ export const daysBetween = (date1, date2) => {
   const oneDay = 24 * 60 * 60 * 1000; // hours*minutes*seconds*milliseconds
   return Math.round(Math.abs((date1 - date2) / oneDay));
 }
+
+export const enumerateDevices =  async () => {
+  navigator.mediaDevices.enumerateDevices()
+    .then(function (devices) {
+      devices.forEach(function (device) {
+        console.log(device.kind + ": " + device.label +
+          " id = " + device.deviceId);
+      });
+      return devices;
+    })
+    .catch(function (err) {
+      console.log(err.name + ": " + err.message);
+    });
+}
+
+export const getInitials = (name) => {
+  if (!name) return '';
+  const parts = name.split(' ');
+  if (parts.length === 1) {
+    return parts[0][0].toUpperCase();
+  } else {
+    return parts[0][0].toUpperCase() + parts[parts.length-1][0].toUpperCase();
+  }
+}

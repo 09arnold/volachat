@@ -11,6 +11,9 @@ import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 
+import Draggable from 'react-draggable';
+import Paper from '@material-ui/core/Paper';
+
 const styles = (theme) => ({
   root: {
     margin: 0,
@@ -26,9 +29,9 @@ const styles = (theme) => ({
 
 const useStyles = makeStyles({
   paper: {
-    // top: '7.5%',
-    // position: 'absolute',
-    // margin: 'auto',
+    top: '7.5%',
+    position: 'absolute',
+    margin: 'auto',
   },
 
 }, { name: 'MuiDialog' });
@@ -60,6 +63,14 @@ const DialogActions = withStyles((theme) => ({
   },
 }))(MuiDialogActions);
 
+function PaperComponent(props) {
+  return (
+    <Draggable handle="#customized-dialog-title" cancel={'[class*="MuiDialogContent-root"]'}>
+      <Paper {...props} />
+    </Draggable>
+  );
+}
+
 export default function AppDialog(props) {
   const dialogStyles = useStyles();
   const theme = useTheme();
@@ -68,34 +79,42 @@ export default function AppDialog(props) {
   return (
     <div>
       <Dialog
+        disableEnforceFocus
         onClose={props.handleClose}
         aria-labelledby="customized-dialog-title"
         open={props.open}
         maxWidth={props.maxWidth}
+        PaperComponent={PaperComponent}
         classes={dialogStyles}
         scroll='paper'
         fullScreen={fullScreen}
         fullWidth={true}>
-        <DialogTitle id="customized-dialog-title" onClose={props.handleClose}>
-          {props.title}
-        </DialogTitle>
-        <DialogContent>
+        {props.showTitle ? (
+          <DialogTitle id="customized-dialog-title" onClose={props.handleClose}>
+            {props.title}
+          </DialogTitle>
+        ) : null}
+
+        <DialogContent id={props.isCallDialog ? 'customized-dialog-title' : ''}>
           {props.children}
         </DialogContent>
-        <Divider variant="middle" />
         {props.showFooter ?
-          (<DialogActions >
-            <Button onClick={props.handleClose} >
-              {props.buttonLabel}
-            </Button>
-            {props.dialogButtons ? (
-              props.dialogButtons.map((button, index) => (
-                <Button onClick={button.action} variant="contained" key={index} color={button.primary ? 'primary' : ''}>
-                  {button.label}
+          (
+            <>
+              <Divider variant="middle" />
+              <DialogActions >
+                <Button onClick={props.handleClose} >
+                  {props.buttonLabel}
                 </Button>
-              ))
-            ) : null}
-          </DialogActions>) : ''
+                {props.dialogButtons ? (
+                  props.dialogButtons.map((button, index) => (
+                    <Button onClick={button.action} variant="contained" key={index} color={button.primary ? 'primary' : ''}>
+                      {button.label}
+                    </Button>
+                  ))
+                ) : null}
+              </DialogActions>
+            </>) : ''
         }
       </Dialog>
     </div>
@@ -105,6 +124,8 @@ export default function AppDialog(props) {
 AppDialog.defaultProps = {
   title: 'Dialog',
   buttonLabel: 'Close',
+  isCallDialog: false,
   maxWidth: 'md',
-  showFooter: true
+  showFooter: true,
+  showTitle: true
 }

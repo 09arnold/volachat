@@ -10,35 +10,52 @@ const userName = AppStorage.getItem('userName');
 
 let RTCPeer = null;
 
-const setupPeer = async () => {
-  if (localPeerId) {
-    console.log(`Setting up local peer with id ${localPeerId}`);
-    RTCPeer = await new Peer(localPeerId, {
-      host: '192.168.8.107',
-      port: 9000,
-      path: '/volachat'
-    });
+const setupPeer = async (peerId = AppStorage.getItem('peerId')) => {
+  if (peerId) {
+    console.log(`Setting up local peer with id ${peerId}`);
+    RTCPeer = await new Peer(peerId, JSON.parse(process.env.REACT_APP_LOCAL_SIGNALING.toLowerCase()) ? {
+      host: process.env.REACT_APP_SIGNALING_SERVER_HOST,
+      port: process.env.REACT_APP_SIGNALING_SERVER_PORT,
+      path: process.env.REACT_APP_SIGNALING_SERVER_PATH
+    } : null);
 
     RTCPeer.on('connection', function (conn) {
       console.info('Someone connected!', conn.peer);
 
       conn.on('open', () => {
         console.info(`Connected to peer [${conn.peer}]`, 'RTCPeer');
-        let connMessage = ConnectionMessage(conn, localPeerId);
+        let connMessage = ConnectionMessage(conn, peerId);
         conn.send(JSON.stringify(connMessage));
       })
 
       conn.on('data', function (data) {
         console.info(`DATA RECEIVED`, JSON.parse(data), 'RTCPeer');
-        dataReceived(data, conn);
+        _dataReceived(data, conn);
+      });
+
+      conn.on('call', (call) => {
+        console.log('Incoming Call', call)
       });
 
       conn.on('close', (data) => {
         console.log(conn.peer + ' lost', 'RTCPeer');
+        reduxStore.dispatch(
+          peerOffline(conn.peer)
+        )
       });
 
       conn.on('error', (error) => {
         console.log(conn.peer + ' error', error, 'RTCPeer');
+      });
+    });
+
+    RTCPeer.on('call', function (call) {
+      console.log('Incoming Call', call)
+      // Answer the call, providing our mediaStream
+      call.answer(null);
+
+      call.on('stream', mediaStream => {
+        window.incomingStream = mediaStream;
       });
     });
 
@@ -52,6 +69,13 @@ const setupPeer = async () => {
 (async () => {
   RTCPeer = await setupPeer();
 })();
+
+const getLocalPeer = async () => {
+  if (RTCPeer === null) {
+    await setupPeer();
+  }
+  return RTCPeer;
+}
 
 const getPeerConnection = async (peerId) => {
   if (!RTCPeer || RTCPeer.destroyed) {
@@ -68,13 +92,13 @@ const getPeerConnection = async (peerId) => {
 
   conn.on('data', function (data) {
     console.log(`DATA RECEIVED`, JSON.parse(data));
-    dataReceived(data, conn);
+    _dataReceived(data, conn);
   });
 
   conn.on('close', (data) => {
     console.log(conn.peer + ' lost');
     reduxStore.dispatch(
-      peerOffline(conn.peer)
+      peerOffline(conn.peer, reduxStore.getState().chatList)
     )
   });
 
@@ -112,7 +136,18 @@ const sendMessage = async (conn, message, id) => {
 
 };
 
-const dataReceived = (data, connection) => {
+const callPeer = async (stream, id) => {
+  let call = null;
+  call = RTCPeer.call(id, stream);
+
+  // reduxStore.dispatch(
+  //   setPeerConnection(id, conn, reduxStore.getState().chatList)
+  // );
+
+  return call;
+}
+
+const _dataReceived = (data, connection) => {
   data = JSON.parse(data);
   console.info(connection, data)
 
@@ -136,9 +171,14 @@ const dataReceived = (data, connection) => {
   console.info(reduxStore.getState(), chat || data);
 }
 
+
+
 export {
   sendMessage,
-  getPeerConnection
+  getPeerConnection,
+  callPeer,
+  setupPeer,
+  getLocalPeer
 };
 
 export default RTCPeer;
