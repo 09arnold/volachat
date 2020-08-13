@@ -89,21 +89,21 @@ export function ChatWindow(props) {
   const [listening, setListening] = React.useState(false);
 
   // Set up event source to listen for updates from the server
-  React.useEffect(() => {
-    if (!listening) {
-      const events = new EventSource('http://192.168.8.107:9000/sse');
+  // React.useEffect(() => {
+  //   if (!listening) {
+  //     const events = new EventSource('http://192.168.8.107:9000/sse');
 
-      events.addEventListener('seating-update', function (message) {
-        console.log(message);
-      });
-      console.log(events)
-      events.onmessage = function (message) {
-        console.log(message);
-      };
+  //     events.addEventListener('seating-update', function (message) {
+  //       console.log(message);
+  //     });
+  //     console.log(events)
+  //     events.onmessage = function (message) {
+  //       console.log(message);
+  //     };
 
-      setListening(true);
-    }
-  }, [listening]);
+  //     setListening(true);
+  //   }
+  // }, [listening]);
 
   const chatView = (
     <div className={classes.root}>
