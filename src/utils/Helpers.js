@@ -5,22 +5,21 @@ export const is_date = function (input) {
 };
 
 export const getTimeDisplay = function (date, curDate = new Date()) {
-  // if date is invalid, return ''
-  if (typeof (date) === "string") date = new Date(date);
-  if (!is_date(date)) return '';
-  let resultDate;
-  // get number of days between curDate and date
-  const daysDiff = daysBetween(date, curDate);
-  // if today, return the time
+  date = new Date(date); // Make sure we have a date object
+
+  if (!is_date(date)) return 'Invalid Date';
+
+  let resultDate, daysDiff = daysBetween(date, curDate);
+
   if (daysDiff === 0) {
     resultDate = date.toLocaleTimeString();
-  }// if yesterday, return yesterday
+  }
   else if (daysDiff === 1) {
     resultDate = 'Yesterday';
-  }// if within 7 days, return day of week
+  }
   else if (1 < daysDiff && daysDiff < 7) {
     resultDate = dayOfWeekAsString(date.getDay());
-  }// return the date
+  }
   else {
     resultDate = date.toLocaleDateString()
   }
@@ -55,6 +54,9 @@ export const sortMessagesByTime = function (messages) {
 export const sortChatByLastMessage = function (chats) {
   return chats.sort(
     (a, b) => {
+      if (!a.messages.length || !b.messages.length) {
+        return 1;
+      }
       const a1 = new Date(a.messages[a.messages.length - 1].time).getTime(),
         b1 = new Date(b.messages[b.messages.length - 1].time).getTime();
       return b1 - a1;
@@ -65,4 +67,28 @@ export const sortChatByLastMessage = function (chats) {
 export const daysBetween = (date1, date2) => {
   const oneDay = 24 * 60 * 60 * 1000; // hours*minutes*seconds*milliseconds
   return Math.round(Math.abs((date1 - date2) / oneDay));
+}
+
+export const enumerateDevices =  async () => {
+  navigator.mediaDevices.enumerateDevices()
+    .then(function (devices) {
+      devices.forEach(function (device) {
+        console.log(device.kind + ": " + device.label +
+          " id = " + device.deviceId);
+      });
+      return devices;
+    })
+    .catch(function (err) {
+      console.log(err.name + ": " + err.message);
+    });
+}
+
+export const getInitials = (name) => {
+  if (!name) return '';
+  const parts = name.split(' ');
+  if (parts.length === 1) {
+    return parts[0][0].toUpperCase();
+  } else {
+    return parts[0][0].toUpperCase() + parts[parts.length-1][0].toUpperCase();
+  }
 }

@@ -3,9 +3,7 @@ export const ChatListing = [
     "id": 1,
     "userName": "Gilbertina Judson",
     "lastOnline": "2019-10-17 02:24:16",
-    "avatar": {
-      "src": "https://robohash.org/sapientesednon.png?size=50x50&set=set1"
-    },
+    "avatar": "https://robohash.org/sapientesednon.png?size=50x50&set=set1",
     "messages": [
       {
         "text": "Quisque arcu libero, rutrum ac, lobortis vel, dapibus at, diam.",
@@ -17,9 +15,7 @@ export const ChatListing = [
     "id": 2,
     "userName": "Sadye Cavendish",
     "lastOnline": "2019-05-22 20:02:53",
-    "avatar": {
-      "src": "https://robohash.org/harumaccusamuset.jpg?size=50x50&set=set1"
-    },
+    "avatar": "https://robohash.org/harumaccusamuset.jpg?size=50x50&set=set1",
     "messages": [
       {
         "text": "Praesent lectus.",
@@ -46,9 +42,7 @@ export const ChatListing = [
     "id": 3,
     "userName": "Judye Dominy",
     "lastOnline": "2019-10-30 02:33:17",
-    "avatar": {
-      "src": "https://robohash.org/porroeacorporis.bmp?size=50x50&set=set1"
-    },
+    "avatar": "https://robohash.org/porroeacorporis.bmp?size=50x50&set=set1",
     "messages": [
       {
         "text": "Integer pede justo, lacinia eget, tincidunt eget, tempus vel, pede.",
@@ -140,9 +134,7 @@ export const ChatListing = [
     "id": 4,
     "userName": "Gawen Gatward",
     "lastOnline": "2019-11-28 18:32:21",
-    "avatar": {
-      "src": "https://robohash.org/consecteturetet.jpg?size=50x50&set=set1"
-    },
+    "avatar": "https://robohash.org/consecteturetet.jpg?size=50x50&set=set1",
     "messages": [
       {
         "text": "In hac habitasse platea dictumst.",
@@ -249,9 +241,7 @@ export const ChatListing = [
     "id": 5,
     "userName": "Danette Larkkem",
     "lastOnline": "2020-03-12 13:25:36",
-    "avatar": {
-      "src": "https://robohash.org/impeditdoloremquesaepe.png?size=50x50&set=set1"
-    },
+    "avatar": "https://robohash.org/impeditdoloremquesaepe.png?size=50x50&set=set1",
     "messages": [
       {
         "text": "Cras non velit nec nisi vulputate nonummy.",
@@ -338,9 +328,7 @@ export const ChatListing = [
     "id": 6,
     "userName": "Corney Earle",
     "lastOnline": "2019-08-25 01:43:06",
-    "avatar": {
-      "src": "https://robohash.org/eosnonreiciendis.png?size=50x50&set=set1"
-    },
+    "avatar": "https://robohash.org/eosnonreiciendis.png?size=50x50&set=set1",
     "messages": [
       {
         "text": "Nulla justo.",
@@ -402,9 +390,7 @@ export const ChatListing = [
     "id": 7,
     "userName": "Shelagh Morriarty",
     "lastOnline": "2019-10-01 19:19:00",
-    "avatar": {
-      "src": "https://robohash.org/etquasillum.bmp?size=50x50&set=set1"
-    },
+    "avatar": "https://robohash.org/etquasillum.bmp?size=50x50&set=set1",
     "messages": [
       {
         "text": "Nullam orci pede, venenatis non, sodales sed, tincidunt eu, felis.",
@@ -471,9 +457,7 @@ export const ChatListing = [
     "id": 8,
     "userName": "Nadean MacAnulty",
     "lastOnline": "2020-02-07 16:21:38",
-    "avatar": {
-      "src": "https://robohash.org/omnismollitiamaiores.png?size=50x50&set=set1"
-    },
+    "avatar": "https://robohash.org/omnismollitiamaiores.png?size=50x50&set=set1",
     "messages": [
       {
         "text": "Suspendisse potenti.",
@@ -565,9 +549,7 @@ export const ChatListing = [
     "id": 9,
     "userName": "Toby MacRury",
     "lastOnline": "2019-06-28 21:56:22",
-    "avatar": {
-      "src": "https://robohash.org/etmaximetempora.bmp?size=50x50&set=set1"
-    },
+    "avatar": "https://robohash.org/etmaximetempora.bmp?size=50x50&set=set1",
     "messages": [
       {
         "text": "Nam tristique tortor eu pede.",
@@ -609,9 +591,7 @@ export const ChatListing = [
     "id": 10,
     "userName": "Galen Poynzer",
     "lastOnline": "2019-08-10 12:15:57",
-    "avatar": {
-      "src": "https://robohash.org/recusandaenondolores.bmp?size=50x50&set=set1"
-    },
+    "avatar": "https://robohash.org/recusandaenondolores.bmp?size=50x50&set=set1",
     "messages": [
       {
         "text": "Aenean auctor gravida sem.",
@@ -653,9 +633,7 @@ export const ChatListing = [
     "id": 11,
     "userName": "Mella Whitwham",
     "lastOnline": "2019-06-08 09:23:54",
-    "avatar": {
-      "src": "https://robohash.org/debitistemporevero.jpg?size=50x50&set=set1"
-    },
+    "avatar": "https://robohash.org/debitistemporevero.jpg?size=50x50&set=set1",
     "messages": [
       {
         "text": "Vivamus metus arcu, adipiscing molestie, hendrerit at, vulputate vitae, nisl.",
@@ -692,9 +670,7 @@ export const ChatListing = [
     "id": 12,
     "userName": "Betty Kewish",
     "lastOnline": "2019-05-27 08:28:43",
-    "avatar": {
-      "src": "https://robohash.org/nostrumnumquamdoloremque.bmp?size=50x50&set=set1"
-    },
+    "avatar": "https://robohash.org/nostrumnumquamdoloremque.bmp?size=50x50&set=set1",
     "messages": [
       {
         "text": "Fusce consequat.",
@@ -736,9 +712,7 @@ export const ChatListing = [
     "id": 13,
     "userName": "Hart Tregunnah",
     "lastOnline": "2019-05-31 15:40:42",
-    "avatar": {
-      "src": "https://robohash.org/eligendisimiliqueest.bmp?size=50x50&set=set1"
-    },
+    "avatar": "https://robohash.org/eligendisimiliqueest.bmp?size=50x50&set=set1",
     "messages": [
       {
         "text": "Nulla justo.",
@@ -780,9 +754,7 @@ export const ChatListing = [
     "id": 14,
     "userName": "Holly-anne Titmarsh",
     "lastOnline": "2019-11-21 23:50:15",
-    "avatar": {
-      "src": "https://robohash.org/animienimnon.jpg?size=50x50&set=set1"
-    },
+    "avatar": "https://robohash.org/animienimnon.jpg?size=50x50&set=set1",
     "messages": [
       {
         "text": "Suspendisse accumsan tortor quis turpis.",
@@ -809,9 +781,7 @@ export const ChatListing = [
     "id": 15,
     "userName": "Asher Wassell",
     "lastOnline": "2020-01-18 23:10:44",
-    "avatar": {
-      "src": "https://robohash.org/omnissedreiciendis.jpg?size=50x50&set=set1"
-    },
+    "avatar": "https://robohash.org/omnissedreiciendis.jpg?size=50x50&set=set1",
     "messages": [
       {
         "text": "Sed sagittis.",
@@ -908,9 +878,7 @@ export const ChatListing = [
     "id": 16,
     "userName": "Mart Arnoult",
     "lastOnline": "2019-08-07 05:15:06",
-    "avatar": {
-      "src": "https://robohash.org/remnemoexcepturi.bmp?size=50x50&set=set1"
-    },
+    "avatar": "https://robohash.org/remnemoexcepturi.bmp?size=50x50&set=set1",
     "messages": [
       {
         "text": "Ut tellus.",
@@ -1012,9 +980,7 @@ export const ChatListing = [
     "id": 17,
     "userName": "Hagen Kearle",
     "lastOnline": "2020-03-18 08:48:55",
-    "avatar": {
-      "src": "https://robohash.org/sitvoluptasdeleniti.jpg?size=50x50&set=set1"
-    },
+    "avatar": "https://robohash.org/sitvoluptasdeleniti.jpg?size=50x50&set=set1",
     "messages": [
       {
         "text": "Morbi odio odio, elementum eu, interdum eu, tincidunt in, leo.",
@@ -1031,9 +997,7 @@ export const ChatListing = [
     "id": 18,
     "userName": "Abbi Knowler",
     "lastOnline": "2019-11-21 00:25:28",
-    "avatar": {
-      "src": "https://robohash.org/fugitvoluptatemvoluptas.bmp?size=50x50&set=set1"
-    },
+    "avatar": "https://robohash.org/fugitvoluptatemvoluptas.bmp?size=50x50&set=set1",
     "messages": [
       {
         "text": "Mauris sit amet eros.",
@@ -1120,9 +1084,7 @@ export const ChatListing = [
     "id": 19,
     "userName": "Loria Tolley",
     "lastOnline": "2020-03-01 05:18:16",
-    "avatar": {
-      "src": "https://robohash.org/esseanimiid.bmp?size=50x50&set=set1"
-    },
+    "avatar": "https://robohash.org/esseanimiid.bmp?size=50x50&set=set1",
     "messages": [
       {
         "text": "Nam tristique tortor eu pede.",
@@ -1149,9 +1111,7 @@ export const ChatListing = [
     "id": 20,
     "userName": "Burk Wasylkiewicz",
     "lastOnline": "2020-02-05 14:29:40",
-    "avatar": {
-      "src": "https://robohash.org/etfugamolestias.bmp?size=50x50&set=set1"
-    },
+    "avatar": "https://robohash.org/etfugamolestias.bmp?size=50x50&set=set1",
     "messages": [
       {
         "text": "In tempor, turpis nec euismod scelerisque, quam turpis adipiscing lorem, vitae mattis nibh ligula nec sem.",

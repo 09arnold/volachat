@@ -1,9 +1,12 @@
 import React from 'react';
-import { render } from '@testing-library/react';
-import MiniDrawer from "../../components/MiniDrawer";
 
-test('renders mini drawer on side', () => {
-  const { getByText } = render(<MiniDrawer />);
-  const drawer = getByText(/VolaChat/i);
-  expect(drawer).toBeInTheDocument();
+import { shallow } from 'enzyme';
+import { List } from '@material-ui/core';
+import { MiniDrawer } from "../../components/MiniDrawer/MiniDrawer";
+
+describe('MiniDrawer Component', () => {
+  test('Renders mini drawer on side', () => {
+    const wrapper = shallow(<MiniDrawer />);
+    expect(wrapper.find(List)).toHaveLength(2);
+  });
 });

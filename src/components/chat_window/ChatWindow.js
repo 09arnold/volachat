@@ -4,28 +4,27 @@ import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 
 import { connect } from "react-redux";
-import { selectChat } from "../../redux/actions";
+import { selectChat, addChat, triggerRender, selectIndex } from "../../redux/actions";
 
 import './../../App.css';
 import logo from './../../logo.svg';
 
 import ChatWindowHeader from "./ChatWindowHeader";
 import ChatMessage from "./ChatMessage";
+import { Divider } from "@material-ui/core";
 
 const useStyles = makeStyles(theme => ({
   root: {
     display: 'flex',
     flexDirection: 'column',
     height: '100%',
-    position: 'relative'
+    overflow: 'hidden',
+    backgroundColor: theme.palette.background.paper
+    // position: 'relative'
   },
   containerParent: {
-    height: '100%',
-
-    position: 'relative',
   },
   containerBG: {
-    backgroundImage: `url(img/bg2.png)`,
     position: 'absolute',
     top: 0,
     bottom: 0,
@@ -33,17 +32,13 @@ const useStyles = makeStyles(theme => ({
     right: 0,
   },
   messagesContainer: {
-    flexGrow: '1',
-    overflow: 'auto',
-    margin: '10px 0 70px',
-    padding: '10px 15px 0',
-    flexDirection: 'column',
     display: 'flex',
-    position: 'absolute',
-    bottom: '0',
-    left: '0',
-    right: '0',
-    height: 'calc(100% - 80px)'
+    flexGrow: '1',
+    flexDirection: 'column',
+    overflow: 'auto',
+    padding: theme.spacing(2),
+    backgroundImage: `url(img/bg2.png)`,
+    position: 'relative',
   },
   myMessage: {
     alignSelf: 'flex-end',
@@ -70,6 +65,9 @@ const useStyles = makeStyles(theme => ({
   darkBG: {
     filter: 'invert(80%)',
     '-webkitFilter': 'invert(80%)'
+  },
+  messageInputDivider: {
+    backgroundColor: theme.palette.divider
   }
 }));
 
@@ -88,34 +86,46 @@ export function ChatWindow(props) {
     </header>
   );
 
+  const [listening, setListening] = React.useState(false);
+
+  // Set up event source to listen for updates from the server
+  // React.useEffect(() => {
+  //   if (!listening) {
+  //     const events = new EventSource('http://192.168.8.107:9000/sse');
+
+  //     events.addEventListener('seating-update', function (message) {
+  //       console.log(message);
+  //     });
+  //     console.log(events)
+  //     events.onmessage = function (message) {
+  //       console.log(message);
+  //     };
+
+  //     setListening(true);
+  //   }
+  // }, [listening]);
+
   const chatView = (
     <div className={classes.root}>
-      <ChatWindowHeader selectedChat={props.selectedChat}></ChatWindowHeader>
-      <div className={`${classes.containerParent}`}>
-        <div className={`${classes.containerBG} ${props.theme.palette.type === 'dark' && classes.darkBG}`}></div>
-        <div className={`${classes.messagesContainer} scroller`} ref={msgContatinerEl}>
-          {chatMessages.map((message, index) => (
-            <ChatMessage message={message} key={index} />
-          ))}
-        </div>
+      <ChatWindowHeader selectedChat={props.selectedChat} openCallDialog={props.openCallDialog}></ChatWindowHeader>
+      <div className={`${classes.containerParent} ${classes.messagesContainer} scroller ${props.theme.palette.type === 'dark' && classes.darkBG}`} ref={msgContatinerEl}>
+        {chatMessages.map((message, index) => (
+          <ChatMessage message={message} key={index} />
+        ))}
       </div>
+      <Divider className={classes.messageInputDivider} />
       {props.messageInput}
     </div>
   );
 
   useEffect(() => {
-    // console.log('CW props', props);
     if (props.selectedChat) {
-      // sort by time
-
-      // set chat messages
       setChatMessages(props.selectedChat.messages);
-      // scroll to bottom
       setTimeout(() => {
         msgContatinerEl.current.scrollTop = msgContatinerEl.current.scrollHeight;
       }, 0);
     }
-  }, [props.selectedChat, props.triggerRender]);
+  }, [props.selectedChat, props.renderCount]);
 
   return (
     <>{props.selectedChat ? chatView : noChatSelected}</>
@@ -124,10 +134,18 @@ export function ChatWindow(props) {
 
 const mapStateToProps = state => {
   return {
-    selectedChat: state.selectedChat,
+    selectedChat: state.selectedChat ? { ...state.selectedChat } : state.selectedChat,
     messageInput: state.selectedInput,
-    triggerRender: state.renderCount
+    triggerRender: state.renderCount,
+    chatList: state.chatList,
+    renderCount: state.renderCount
   }
 };
 
-export default connect(mapStateToProps, { selectChat })(ChatWindow);
+export default connect(mapStateToProps, {
+  selectChat,
+  addChat,
+  triggerRender,
+  selectIndex
+}
+)(ChatWindow);

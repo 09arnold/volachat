@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import InputBase from '@material-ui/core/InputBase';
 import IconButton from '@material-ui/core/IconButton';
@@ -6,12 +6,15 @@ import SearchIcon from '@material-ui/icons/Search';
 
 const useStyles = makeStyles(theme => ({
   root: {
-    // padding: '2px 4px',
-    padding: theme.spacing(.25, .5),
+    padding: theme.spacing(0, .75),
     display: 'flex',
     alignItems: 'center',
     backgroundColor: theme.palette.background.paper,
-    borderRight: `1px solid ${theme.palette.divider}`
+    '&:hover': {
+      backgroundColor: theme.palette.action.hover,
+    },
+    border: `1px solid ${theme.palette.divider}`,
+    borderRadius: theme.spacing(1)
   },
   input: {
     marginLeft: theme.spacing(1),
@@ -20,27 +23,29 @@ const useStyles = makeStyles(theme => ({
   iconButton: {
     padding: 10,
   },
-  // divider: {
-  //   height: 28,
-  //   margin: 4,
-  // },
+  focused: {
+    backgroundColor: theme.palette.action.hover,
+  }
 }));
 
 export default function ChatSearch(props) {
 
   const classes = useStyles();
+  const [focused, setFocused] = useState(false);
 
   return (
-    <div className={classes.root}>
+    <div className={`${classes.root} ${focused && classes.focused}`}>
+      <InputBase
+        className={classes.input}
+        placeholder="Search"
+        inputProps={{ 'aria-label': 'search' }}
+        onChange={event => { props.getSearchTerm(event.currentTarget.value) }}
+        onFocus={event => setFocused(true)}
+        onBlur={event => setFocused(false)}
+      />
       <IconButton type="submit" className={classes.iconButton} aria-label="search">
         <SearchIcon />
       </IconButton>
-      <InputBase
-        className={classes.input}
-        placeholder="Search chat..."
-        inputProps={{ 'aria-label': 'search' }}
-        onChange={event => { props.getSearchTerm(event.currentTarget.value) }}
-      />
     </div>
   );
 }

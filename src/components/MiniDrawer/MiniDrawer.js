@@ -9,15 +9,18 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
-
-import ExitToApp from "@material-ui/icons/ExitToApp";
-import GroupAddIcon from '@material-ui/icons/GroupAdd';
-import StarsIcon from "@material-ui/icons/Stars";
-import SettingsIcon from "@material-ui/icons/Settings";
-import NightsStayIcon from '@material-ui/icons/NightsStay';
-import WbSunnyIcon from '@material-ui/icons/WbSunny';
-
+import Avatar from '@material-ui/core/Avatar';
+import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import Tooltip from '@material-ui/core/Tooltip';
+
+import StarredMessages from "./StarredMessages";
+import NewGroup from './NewGroup';
+import NewMessageMenuItem from './NewChatMenuItem';
+import Settings from './SettingsMenuItem';
+import ThemeSelector from './ThemeSelector';
+import { connect } from 'react-redux';
+
+import { getInitials } from "../../utils/Helpers";
 
 const drawerWidth = 240;
 
@@ -58,6 +61,8 @@ const useStyles = makeStyles(theme => ({
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen,
     }),
+    overflow: 'hidden',
+    boxShadow: '0 0 15px 0px rgba(0, 0, 0, 0.1)',
   },
   drawerClose: {
     transition: theme.transitions.create('width', {
@@ -81,46 +86,27 @@ const useStyles = makeStyles(theme => ({
     flexGrow: 1,
     padding: theme.spacing(3),
   },
+  small: {
+    width: theme.spacing(3),
+    height: theme.spacing(3),
+    fontSize: theme.spacing(1.5),
+    fontWeight: 600
+  },
+  large: {
+    width: theme.spacing(7),
+    height: theme.spacing(7),
+    fontSize: theme.spacing(2.33),
+    fontWeight: 600
+  },
 }));
 
-const links = [
-  {
-    label: 'Starred Messages',
-    icon: <StarsIcon />,
-    url: '/starred'
-  }, {
-    label: 'New Group',
-    icon: <GroupAddIcon />,
-    url: '/new-group'
-  }, {
-    label: 'Settings',
-    icon: <SettingsIcon />,
-    url: '/settings'
-  }
-];
-
-export default function MiniDrawer(props) {
+const MiniDrawer = (props) => {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
-  const [themeIcon, setThemeIcon] = React.useState(<NightsStayIcon />);
-  const [themeLabel, setThemeLabel] = React.useState('Dark Mode');
 
   const handleDrawerOpen = () => { setOpen(true) };
 
   const handleDrawerClose = () => { setOpen(false) };
-
-
-  const toggleThemeI = () => {
-    if (themeLabel === "Dark Mode") {
-      props.toggleTheme('dark');
-      setThemeIcon(<WbSunnyIcon />);
-      setThemeLabel("Light Mode")
-    } else {
-      props.toggleTheme('light');
-      setThemeIcon(<NightsStayIcon />);
-      setThemeLabel("Dark Mode")
-    }
-  }
 
   let menuButton = open ? (
     <ListItem style={{ flexGrow: "0" }}>
@@ -153,37 +139,40 @@ export default function MiniDrawer(props) {
           <div>
             {menuButton}
           </div>
-          <Divider variant="middle" />
-          <List>
-            {links.map((link) => (
-              <ListItem button key={link.url} style={{ flexGrow: "0" }}>
-                <Tooltip title={link.label}>
-                  <ListItemIcon>{link.icon}</ListItemIcon>
-                </Tooltip>
-                <ListItemText primary={link.label} />
+          {/* <Divider variant="middle" /> */}
+          <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
+            <List style={{ margin: 'auto 0' }}>
+              <NewMessageMenuItem />
+              <StarredMessages />
+              <NewGroup />
+              <ThemeSelector toggleTheme={props.toggleTheme} />
+              <Settings />
+            </List>
+            {/* <Divider variant="middle" /> */}
+            {/* <div className="vertical-strecth" style={{ height: "100%" }}></div> */}
+            {/* <Divider variant="middle" /> */}
+            <List>
+              <ListItem>
+                <ListItemAvatar>
+                  <Tooltip title={props.userName}>
+                    <Avatar alt="Remy Sharp" src="/broken-image.jpg" className={classes.small}>
+                      {getInitials(props.userName)}
+                    </Avatar>
+                  </Tooltip>
+                </ListItemAvatar>
               </ListItem>
-            ))}
-          </List>
-          <Divider variant="middle" />
-          <ListItem button style={{ flexGrow: "0" }} onClick={toggleThemeI}>
-            <Tooltip title={themeLabel}>
-              <ListItemIcon>{themeIcon}</ListItemIcon>
-            </Tooltip>
-            <ListItemText primary={themeLabel} />
-          </ListItem>
-          <Divider variant="middle" />
-          <div className="vertical-strecth" style={{ height: "100%" }}></div>
-          <Divider variant="middle" />
-          <List>
-            <ListItem button style={{ flexGrow: "0" }}>
-              <Tooltip title={'Logout'}>
-                <ListItemIcon><ExitToApp /></ListItemIcon>
-              </Tooltip>
-              <ListItemText primary="Logout" />
-            </ListItem>
-          </List>
+            </List>
+          </div>
         </Drawer >
       </ClickAwayListener>
     </div>
   );
 }
+
+const mapStateToProps = state => {
+  return {
+    userName: state.userName,
+  }
+}
+export { MiniDrawer };
+export default connect(mapStateToProps)(MiniDrawer);

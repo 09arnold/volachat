@@ -45,3 +45,45 @@ export const addChat = (chatList, chat) => {
     payload: { chatList, chat }
   }
 }
+
+export const setPeerId = (id) => {
+  return {
+    type: 'SET_PEER_ID',
+    payload: Number(id)
+  }
+}
+
+export const setUserName = (userName) => {
+  return {
+    type: 'SET_USERNAME',
+    payload: userName
+  }
+}
+
+export const getPeerConnection = (peerId, chatList) => {
+  return {
+    type: 'GET_PEER_CONNECTION',
+    payload: { peerId: Number(peerId), chatList }
+  }
+}
+
+export const setPeerConnection = (peerId, connection, chatList) => {
+  return {
+    type: 'SET_PEER_CONNECTION',
+    payload: { peerId: Number(peerId), connection, chatList }
+  }
+}
+
+export const peerOffline = (peerId, chatList) => {
+  return {
+    type: 'PEER_OFFLINE',
+    payload: { peerId: Number(peerId), chatList }
+  }
+}
+
+export const setTheme = (theme) => {
+  return {
+    type: 'SET_THEME',
+    payload: theme
+  }
+}

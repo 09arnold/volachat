@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import AppBar from '@material-ui/core/AppBar';
 import ListItem from '@material-ui/core/ListItem';
@@ -21,6 +21,8 @@ import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 
 import { makeStyles } from '@material-ui/core/styles';
 import { getTimeDisplay } from "../../utils/Helpers";
+
+import CallDialog from "../call_dialog";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -92,11 +94,21 @@ export default function ChatWindowHeader(props) {
   const classes = useStyles();
 
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const [openCallDialog, setOpenCallDialog] = React.useState(false);
   const open = Boolean(anchorEl);
 
   const handleClick = event => { setAnchorEl(event.currentTarget) };
 
   const handleClose = () => { setAnchorEl(null) };
+
+  const handleCallClicked = () => {
+    // setOpenCallDialog(true);
+    props.openCallDialog();
+  }
+
+  const closeCallModal = () => {
+    setOpenCallDialog(false);
+  }
 
   return (
     <AppBar position="static" className={classes.appBar} elevation={2}>
@@ -107,7 +119,7 @@ export default function ChatWindowHeader(props) {
             <ListItemAvatar>
               <Avatar
                 alt={props.selectedChat && props.selectedChat.userName}
-                src={props.selectedChat && props.selectedChat.avatar.src}
+                src={props.selectedChat && props.selectedChat.avatar}
                 className={classes.large}
               />
             </ListItemAvatar>
@@ -132,7 +144,7 @@ export default function ChatWindowHeader(props) {
                   className={classes.inline}
                   color="textPrimary"
                 >
-                  {getTimeDisplay(props.selectedChat && props.selectedChat.lastOnline)}
+                  {props.selectedChat && props.selectedChat.online ? 'Online' : getTimeDisplay(props.selectedChat && props.selectedChat.lastOnline)}
                 </Typography>
               }
             />
@@ -155,7 +167,7 @@ export default function ChatWindowHeader(props) {
         <IconButton aria-controls="fade-menu" aria-haspopup="true">
           <VideocamIcon />
         </IconButton>
-        <IconButton aria-controls="fade-menu" aria-haspopup="true" className={classes.menuButton}>
+        <IconButton aria-controls="fade-menu" aria-haspopup="true" className={classes.menuButton} onClick={handleCallClicked}>
           <CallIcon />
         </IconButton>
         <IconButton aria-controls="fade-menu" aria-haspopup="true" onClick={handleClick} className={classes.menuButton}>
@@ -175,6 +187,7 @@ export default function ChatWindowHeader(props) {
           <MenuItem onClick={handleClose}>Block/Exit</MenuItem>
         </Menu>
       </Toolbar>
+      {/* <CallDialog user={props.selectedChat} open={openCallDialog} openDialog={setOpenCallDialog} onClose={closeCallModal} selectedChat={props.selectedChat}></CallDialog> */}
     </AppBar>
   );
 }
