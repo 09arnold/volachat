@@ -1,81 +1,74 @@
-<center>
- <h2>VolaChat</h2>
+# VolaChat
 
-[![Circle CI](https://circleci.com/gh/09arnold/volachat.svg?style=svg)](https://circleci.com/gh/09arnold/volachat) 
-[![Maintainability](https://api.codeclimate.com/v1/badges/3f9c7ebd04d6418e966d/maintainability)](https://codeclimate.com/github/09arnold/volachat/maintainability)
-[![Issue Count](https://codeclimate.com/github/09arnold/volachat/badges/issue_count.svg)](https://codeclimate.com/github/09arnold/volachat)
-[![Test Coverage](https://api.codeclimate.com/v1/badges/3f9c7ebd04d6418e966d/test_coverage)](https://codeclimate.com/github/09arnold/volachat/test_coverage)
+<!-- Repo stats start -->
+<div style='display: flex; flex-direction: row'>
+<details>
+  <summary style='display: flex; align-items: center'>
+    <strong>
+      Code Climate &nbsp; 
+    </strong>
+    <img src='https://badgen.net/codeclimate/maintainability/09arnold/volachat' />
+  </summary>
+  
+  #### Details
 
-</center>
+  + [![Maintainability](https://api.codeclimate.com/v1/badges/3f9c7ebd04d6418e966d/maintainability)](https://codeclimate.com/github/09arnold/volachat/maintainability)
 
-## A very very **_WIP_** Project
-Proper documentation coming soon
+  + [![Issue Count](https://codeclimate.com/github/09arnold/volachat/badges/issue_count.svg)](https://codeclimate.com/github/09arnold/volachat)
+
+  + [![Test Coverage](https://api.codeclimate.com/v1/badges/3f9c7ebd04d6418e966d/test_coverage)](https://codeclimate.com/github/09arnold/volachat/test_coverage)
+
+  + [![Lines of Code](https://badgen.net/codeclimate/loc/09arnold/volachat)](https://badgen.net/codeclimate/issues/09arnold/volachat)
+
+  + [![Technical Debt](https://badgen.net/codeclimate/tech-debt/09arnold/volachat)](https://badgen.net/codeclimate/issues/09arnold/volachat)
+
+</details>
+&nbsp; &nbsp; &nbsp; &nbsp; 
+<div style='display: flex; '>
+  <strong>CircleCI</strong> &nbsp; 
+  <a href='https://circleci.com/gh/09arnold/volachat' target='_blank'>
+    <img src='https://circleci.com/gh/09arnold/volachat.svg?style=svg' alt='CircleCI Badge'  style='align-items: center'/>
+  </a>
+</div>
+</div>
+<!-- Repo stats end -->
+
+> Volachat is a WebRTC based communication app made for random, _volatile_ chatting. Communication is directly between users, going through no servers at all.
+> ##### *_The only contact with a server is to tell each client how to connect to each other, from there, the server is never involved_
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+## Getting Started
+Volachat is built with [React](https://reactjs.org/), [Redux](https://react-redux.js.org/) and [PeerJS](https://peerjs.com/). 
 
-In the project directory, you can run:
+#### Running Volachat
+PeerJS provides a free signalling server that you can use or you can run your own local server. Volachat includes a local PeerJS signalling server.
 
-### `yarn start`
+To start the local signalling server, run `node .\src\webrtc\server.js` in the root of the project folder.
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Visiting `http://localhost:9000` should show the folowing output:
+```
+{"name":"PeerJS Server","description":"A server side element to broker connections between PeerJS clients.","website":"http://peerjs.com/"}
+```
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+Run `yarn start` to start Volachat and access it on  `http://localhost:3000`.
 
-### `yarn test`
+The signalling server used by Volachat can (currently) be changed in the `.\src\webrtc\index.js` file in the `setupPeer` method.
+To use the online signalling server provided by PeerJS and not have to run the local signalling server, change 
+```
+RTCPeer = await new Peer(localPeerId, {
+  host: '192.168.8.107', // local signalling server address
+  port: 9000,
+  path: '/volachat'
+});
+```
+to 
+```
+RTCPeer = await new Peer(localPeerId);
+```
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## How it works - _a gist_
+Volachat has no server to handle communication between clients; all communication is peer to peer and stored locally in the user's `localStorage`.
 
-### `yarn build`
-
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `yarn build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+On first _launch_, where `localStorage` would be empty, Volachat shows a welcome dialog. The last step in the dialog requires the user to enter a `User Name` and it also displays an auto generated `localPeerId`. These are both saved to  `localStorage`.<br>
+Volachat then creates a `PeerJS` peer (internally referred to as `RTCPeer`) with the autogenerated ID which connects to a signalling server.
