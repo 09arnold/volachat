@@ -29,10 +29,10 @@
   },
   "scripts": {
     "server": "node ./src/webrtc/server",
-    "start": "react-scripts start",
+    "start": "react-app-env start",
+    "build": "react-app-env build",
+    "test": "react-app-env test --verbose --coverage",
     "start_all": "react-scripts start server",
-    "build": "react-scripts build",
-    "test": "react-scripts test --verbose --coverage",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -53,6 +53,7 @@
   "devDependencies": {
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.2",
+    "react-app-env": "^1.2.3",
     "react-test-renderer": "^16.13.1",
     "redux-mock-store": "^1.5.4"
   }

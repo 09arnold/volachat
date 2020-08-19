@@ -16,7 +16,7 @@ reduxStore.subscribe(() => {
   }, 750);
 });
 
-const updateAppStorage = () => {
+const updateAppStorage = async () => {
   if (initialRenderCount !== reduxStore.getState().renderCount) {
     let tempList = reduxStore.getState().chatList.map((chat, index) => {
       let newChat = { ...chat }
