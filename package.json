@@ -30,8 +30,8 @@
   "scripts": {
     "server": "node ./src/webrtc/server",
     "start": "react-app-env start",
-    "build": "react-app-env build",
-    "test": "react-app-env test --verbose --coverage",
+    "build": "react-scripts build",
+    "test": "react-scripts test --verbose --coverage",
     "start_all": "react-scripts start server",
     "eject": "react-scripts eject"
   },
